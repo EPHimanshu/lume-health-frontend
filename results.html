@@ -15,12 +15,6 @@
       --card:#ffffff;
       --chip:#eef4ff;
       --shadow:0 8px 24px rgba(25, 42, 70, 0.06);
-      --knowledge-border:#fecaca;
-      --knowledge-bg:#fff7f7;
-      --knowledge-icon-bg:#fee2e2;
-      --knowledge-text:#7f1d1d;
-      --knowledge-link:#b91c1c;
-      --knowledge-link-hover:#991b1b;
     }
 
     *{box-sizing:border-box}
@@ -307,47 +301,93 @@
 
     .knowledge-strip{
       margin-top:18px;
-      padding:12px 14px;
-      border:1.5px solid var(--knowledge-border);
-      background:var(--knowledge-bg);
-      border-radius:12px;
+      padding:14px 16px;
+      border:1px solid #e6ebf2;
+      background:#f8fafc;
+      border-radius:14px;
       display:flex;
       align-items:flex-start;
       gap:10px;
-      max-width:720px;
+      max-width:760px;
     }
 
     .knowledge-icon{
       flex-shrink:0;
-      width:22px;
-      height:22px;
+      width:20px;
+      height:20px;
       border-radius:50%;
-      background:var(--knowledge-icon-bg);
-      color:#dc2626;
+      background:#e9eef6;
+      color:#5b6f93;
       display:grid;
       place-items:center;
-      font-size:13px;
-      font-weight:800;
+      font-size:12px;
+      font-weight:700;
       line-height:1;
-      margin-top:1px;
+      margin-top:2px;
     }
 
     .knowledge-text{
       font-size:14px;
-      line-height:1.55;
-      color:var(--knowledge-text);
+      line-height:1.65;
+      color:#5f6b7a;
     }
 
-    .knowledge-text a{
-      color:var(--knowledge-link);
+    .knowledge-text strong{
+      color:#243f6b;
       font-weight:700;
-      text-decoration:underline;
-      text-underline-offset:2px;
-      margin-left:4px;
     }
 
-    .knowledge-text a:hover{
-      color:var(--knowledge-link-hover);
+    .knowledge-link{
+      display:inline-block;
+      margin-left:6px;
+      color:#243f6b;
+      font-weight:600;
+      text-decoration:none;
+      border-bottom:1px solid rgba(36,63,107,.22);
+      transition:all .2s ease;
+    }
+
+    .knowledge-link:hover{
+      color:#1b3155;
+      border-bottom-color:rgba(36,63,107,.45);
+    }
+
+    .price-diff-strip{
+      margin-top:12px;
+      padding:13px 16px;
+      border:1px solid #e3ebf7;
+      background:#fbfcfe;
+      border-radius:14px;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      max-width:760px;
+    }
+
+    .price-diff-icon{
+      flex-shrink:0;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:#edf3fb;
+      color:#6881a8;
+      display:grid;
+      place-items:center;
+      font-size:12px;
+      font-weight:700;
+      line-height:1;
+      margin-top:2px;
+    }
+
+    .price-diff-text{
+      font-size:14px;
+      line-height:1.65;
+      color:#65758a;
+    }
+
+    .price-diff-text strong{
+      font-weight:700;
+      color:#243f6b;
     }
 
     .actions{
@@ -444,7 +484,8 @@
         font-size:38px;
       }
 
-      .knowledge-strip{
+      .knowledge-strip,
+      .price-diff-strip{
         max-width:100%;
       }
     }
@@ -631,7 +672,7 @@
         return {
           text: "CBC checks important blood components like red cells, white cells, and platelets. It is commonly used to detect infection, anemia, and overall health issues.",
           link: "./blog/cbc-test-guide.html",
-          linkText: "Read full CBC guide"
+          linkText: "Learn more"
         };
       }
 
@@ -639,7 +680,7 @@
         return {
           text: "Vitamin D test helps identify deficiency that may affect bones, immunity, muscle strength, and energy levels.",
           link: "./blog/vitamin-d-test-guide.html",
-          linkText: "Read Vitamin D guide"
+          linkText: "Learn more"
         };
       }
 
@@ -647,7 +688,7 @@
         return {
           text: "HbA1c shows average blood sugar over the past 2 to 3 months and is widely used for diabetes screening and monitoring.",
           link: "./blog/hba1c-test-guide.html",
-          linkText: "Read HbA1c guide"
+          linkText: "Learn more"
         };
       }
 
@@ -655,15 +696,19 @@
         return {
           text: "Thyroid tests help evaluate hormone balance and are useful for checking fatigue, weight changes, metabolism, and related symptoms.",
           link: "./blog/thyroid-test-guide.html",
-          linkText: "Read Thyroid guide"
+          linkText: "Learn more"
         };
       }
 
       return {
         text: "Learn what this test checks, when it is recommended, and how to choose the right lab before booking.",
         link: "./blog/",
-        linkText: "Read test guide"
+        linkText: "Learn more"
       };
+    }
+
+    function getWhyPricesDifferContent() {
+      return "Prices may differ because of lab brand, home sample collection, testing method, bundled parameters, turnaround time, and city-level availability.";
     }
 
     function populateLabFilter(items) {
@@ -738,6 +783,7 @@
         const safeUrl = item.source_url || item.lab_website || "#";
         const displayTestName = cleanTestName(item.test_raw, testInput.value.trim());
         const knowledge = getKnowledgeContent(testInput.value.trim(), displayTestName);
+        const whyPricesDiffer = getWhyPricesDifferContent();
 
         card.innerHTML = `
           ${index === 0 ? `<div class="top-value-ribbon">${escapeHtml(ribbonText)}</div>` : ``}
@@ -760,8 +806,15 @@
           <div class="knowledge-strip">
             <div class="knowledge-icon">i</div>
             <div class="knowledge-text">
-              ${escapeHtml(knowledge.text)}
-              <a href="${escapeHtml(knowledge.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(knowledge.linkText)}</a>
+              <strong>Test info:</strong> ${escapeHtml(knowledge.text)}
+              <a class="knowledge-link" href="${escapeHtml(knowledge.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(knowledge.linkText)}</a>
+            </div>
+          </div>
+
+          <div class="price-diff-strip">
+            <div class="price-diff-icon">?</div>
+            <div class="price-diff-text">
+              <strong>Why prices differ:</strong> ${escapeHtml(whyPricesDiffer)}
             </div>
           </div>
 
