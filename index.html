@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TestNear – Right Test. Right Lab. Fair Price.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ──────────────────────────────────────────
+   TOKENS
+────────────────────────────────────────── */
+:root{
+  --navy:   #0B3B60;
+  --teal:   #159A9C;
+  --ocean:  #166E8D;
+  --gold:   #F59E0B;
+  --gold-lt:#FEF3C7;
+  --gold-bg:#FFFBEB;
+  --rose:   #F87171;
+  --sky:    #BAE6FD;
+  --sky-bg: #EFF6FF;
+  --white:  #FFFFFF;
+  --gray50: #F9FAFB;
+  --gray100:#F3F4F6;
+  --gray200:#E5E7EB;
+  --gray300:#D1D5DB;
+  --gray500:#6B7280;
+  --gray700:#374151;
+  --gray900:#111827;
+
+  --ff-head:"Sora",sans-serif;
+  --ff-body:"DM Sans",sans-serif;
+
+  --radius-sm:8px;
+  --radius-md:14px;
+  --radius-lg:22px;
+  --radius-xl:32px;
+
+  --shadow-sm:0 1px 3px rgba(11,59,96,.08);
+  --shadow-md:0 4px 16px rgba(11,59,96,.12);
+  --shadow-lg:0 12px 40px rgba(11,59,96,.16);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-body);color:var(--gray900);background:var(--white);overflow-x:hidden;padding-top:60px}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--ff-body)}
+img{max-width:100%;display:block}
+
+/* ──────────────────────────────────────────
+   SPLASH — full viewport
+────────────────────────────────────────── */
+.splash{
+  min-height:calc(100vh - 60px);
+  background:linear-gradient(160deg,#FFFBEB 0%,#FEF3C7 50%,#FDE68A 100%);
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+}
+.splash::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 65% 55% at 85% 15%,rgba(21,154,156,.13) 0%,transparent 60%),
+    radial-gradient(ellipse 55% 45% at 10% 85%,rgba(245,158,11,.20) 0%,transparent 60%);
+  pointer-events:none;
+}
+.splash::after{
+  content:"";position:absolute;
+  width:500px;height:500px;border-radius:50%;
+  border:60px solid rgba(245,158,11,.08);
+  right:-120px;bottom:-120px;pointer-events:none;
+}
+.splash-topbar{
+  position:relative;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 28px;
+}
+.splash-body{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:40px 24px 80px;
+  position:relative;z-index:5;
+}
+.splash-badge{
+  display:inline-block;
+  background:rgba(11,59,96,.09);border:1.5px solid rgba(11,59,96,.14);
+  border-radius:999px;padding:6px 18px;
+  font-family:var(--ff-head);font-size:.75rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;color:var(--ocean);
+  margin-bottom:28px;
+}
+.splash-headline{
+  font-family:var(--ff-head);
+  font-size:clamp(2.6rem,8vw,5.5rem);
+  font-weight:800;line-height:1.08;
+  color:var(--navy);margin-bottom:20px;
+  animation:fadeUp .8s ease both;
+}
+.splash-headline em{color:var(--teal);font-style:normal;animation:fadeUp .8s .15s ease both}
+.splash-sub{
+  font-size:clamp(.95rem,2vw,1.15rem);color:var(--ocean);line-height:1.65;
+  margin-bottom:32px;animation:fadeUp .8s .25s ease both;
+}
+.splash-trust{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px 20px;
+  margin-bottom:52px;animation:fadeUp .8s .35s ease both;
+}
+.splash-trust span{
+  font-size:.82rem;font-weight:600;color:var(--navy);
+  background:rgba(255,255,255,.55);border:1.5px solid rgba(11,59,96,.12);
+  border-radius:999px;padding:5px 14px;
+}
+.scroll-hint{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  animation:fadeUp .8s .5s ease both;
+  cursor:pointer;color:var(--navy);opacity:.65;transition:opacity .2s;
+}
+.scroll-hint:hover{opacity:1}
+.scroll-text{font-size:.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.scroll-arrow{animation:arrowBounce 1.5s ease-in-out infinite}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes arrowBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ──────────────────────────────────────────
+   FIXED HEADER
+────────────────────────────────────────── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--white);
+  border-bottom:1.5px solid var(--gray100);
+  padding:0 24px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:var(--shadow-sm);
+}
+
+/* Logo */
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,var(--teal),var(--navy));
+  display:grid;place-items:center;
+  color:#fff;font-size:18px;font-weight:800;font-family:var(--ff-head);
+}
+.logo-text{font-family:var(--ff-head);font-size:1.2rem;font-weight:800;color:var(--navy)}
+.logo-text span{color:var(--teal)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.city-pill{
+  display:flex;align-items:center;gap:6px;
+  background:var(--gray50);border:1.5px solid var(--gray300);
+  border-radius:999px;padding:6px 14px;
+  font-size:.82rem;font-weight:500;color:var(--gray700);
+  cursor:pointer;transition:border-color .2s;
+}
+.city-pill:hover{border-color:var(--teal)}
+.city-pill select{
+  border:none;background:transparent;font-size:.82rem;
+  font-family:var(--ff-body);font-weight:600;color:var(--navy);
+  cursor:pointer;outline:none;
+}
+.pin-svg{color:var(--gold);display:grid;place-items:center}
+.hamburger-nav{
+  width:38px;height:38px;border-radius:10px;
+  border:1.5px solid var(--gray300);background:var(--white);
+  display:grid;place-items:center;cursor:pointer;
+  transition:background .2s,border-color .2s;
+}
+.hamburger-nav:hover{background:var(--navy);border-color:var(--navy)}
+.hamburger-nav:hover .ham-line{background:var(--white)}
+
+/* Hamburger (splash — semi-transparent) */
+.hamburger{
+  width:38px;height:38px;border-radius:10px;
+  border:1.5px solid rgba(11,59,96,.2);background:rgba(255,255,255,.5);
+  display:grid;place-items:center;cursor:pointer;
+  transition:background .2s,border-color .2s;
+}
+.hamburger:hover{background:var(--navy);border-color:var(--navy)}
+.hamburger:hover .ham-line{background:var(--white)}
+.ham-lines{display:flex;flex-direction:column;gap:4px}
+.ham-line{width:18px;height:2px;border-radius:2px;background:var(--navy);transition:background .2s}
+
+/* Language switcher */
+.lang-switcher{position:relative;display:flex;align-items:center;}
+.lang-btn{
+  display:flex;align-items:center;gap:5px;
+  background:var(--gray50);border:1.5px solid var(--gray300);
+  border-radius:999px;padding:6px 12px;
+  font-size:.82rem;font-weight:600;color:var(--navy);
+  cursor:pointer;transition:border-color .2s,background .2s;
+  white-space:nowrap;
+}
+.lang-btn:hover{border-color:var(--teal);background:var(--white)}
+.lang-globe{font-size:.95rem}
+.lang-dropdown{
+  position:absolute;top:calc(100% + 8px);right:0;
+  background:var(--white);border:1.5px solid var(--gray100);
+  border-radius:var(--radius-md);box-shadow:var(--shadow-lg);
+  min-width:160px;overflow:hidden;
+  opacity:0;pointer-events:none;transform:translateY(-6px);
+  transition:opacity .2s,transform .2s;z-index:300;
+}
+.lang-dropdown.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.lang-option{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;font-size:.88rem;font-weight:500;color:var(--gray700);
+  cursor:pointer;transition:background .15s,color .15s;
+}
+.lang-option:hover{background:var(--gold-lt);color:var(--navy)}
+.lang-option.active{background:var(--navy);color:#fff;font-weight:700}
+.lang-flag{font-size:1.1rem}
+
+/* ──────────────────────────────────────────
+   SIDE DRAWER
+────────────────────────────────────────── */
+.drawer-overlay{
+  position:fixed;inset:0;background:rgba(11,59,96,.35);z-index:200;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.drawer-overlay.open{opacity:1;pointer-events:all}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;width:280px;
+  background:var(--white);z-index:201;
+  padding:24px 20px;
+  transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  box-shadow:var(--shadow-lg);
+  display:flex;flex-direction:column;gap:8px;
+}
+.drawer.open{transform:translateX(0)}
+.drawer-close{
+  align-self:flex-end;width:32px;height:32px;border-radius:8px;
+  border:1.5px solid var(--gray300);background:transparent;
+  font-size:1.1rem;color:var(--gray700);display:grid;place-items:center;margin-bottom:12px;
+}
+.drawer-close:hover{background:var(--rose);color:#fff;border-color:var(--rose)}
+.drawer a{
+  padding:10px 14px;border-radius:10px;font-size:.95rem;font-weight:500;
+  color:var(--gray700);transition:background .2s,color .2s;
+}
+.drawer a:hover{background:var(--gold-lt);color:var(--navy)}
+.drawer-divider{height:1px;background:var(--gray100);margin:8px 0}
+
+/* ──────────────────────────────────────────
+   HERO
+────────────────────────────────────────── */
+.hero{
+  background:linear-gradient(160deg,#FFFBEB 0%,#FEF3C7 45%,#FDE68A 100%);
+  padding:56px 24px 64px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 80% 20%,rgba(21,154,156,.12) 0%,transparent 60%),
+             radial-gradient(ellipse 50% 40% at 10% 80%,rgba(245,158,11,.18) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-inner{max-width:860px;margin:0 auto;position:relative}
+
+/* Search header + dots (matches the indicator image you shared) */
+.search-dots{display:flex;justify-content:center;gap:10px;margin:0 0 14px}
+.search-dot{
+  width:10px;height:10px;border-radius:999px;border:none;
+  background:rgba(245,158,11,.28);
+  box-shadow:0 1px 0 rgba(11,59,96,.06);
+  transition:transform .15s,background .15s,opacity .15s;
+}
+.search-dot:hover{transform:translateY(-1px);background:rgba(245,158,11,.40)}
+.search-dot:focus-visible{outline:3px solid rgba(21,154,156,.25);outline-offset:4px}
+.search-dot.active{
+  width:12px;height:12px;
+  background:rgba(245,158,11,.95);
+}
+
+/* CSS-only animated indicator (works even if JS is blocked) */
+.search-dots.auto .search-dot{
+  opacity:.35;
+  transform:scale(1);
+  animation:dotGlow 12.6s infinite;
+}
+.search-dots.auto .search-dot:nth-child(1){animation-delay:0s}
+.search-dots.auto .search-dot:nth-child(2){animation-delay:1.8s}
+.search-dots.auto .search-dot:nth-child(3){animation-delay:3.6s}
+.search-dots.auto .search-dot:nth-child(4){animation-delay:5.4s}
+.search-dots.auto .search-dot:nth-child(5){animation-delay:7.2s}
+.search-dots.auto .search-dot:nth-child(6){animation-delay:9.0s}
+.search-dots.auto .search-dot:nth-child(7){animation-delay:10.8s}
+@keyframes dotGlow{
+  0%,12%{opacity:1;transform:scale(1.25);background:rgba(245,158,11,.95)}
+  13%,100%{opacity:.28;transform:scale(1);background:rgba(245,158,11,.28)}
+}
+
+.search-header{
+  font-family:var(--ff-head);
+  text-align:center;
+  font-size:clamp(1.25rem,3vw,1.75rem);
+  font-weight:800;
+  color:var(--navy);
+  margin:0 0 18px;
+}
+
+/* Search bar */
+.search-bar{
+  background:var(--white);
+  border-radius:var(--radius-lg);
+  border:2px solid var(--gray100);
+  box-shadow:var(--shadow-lg);
+  display:flex;align-items:center;
+  overflow:hidden;
+  margin-bottom:40px;
+}
+.city-chip{
+  display:flex;align-items:center;gap:6px;
+  padding:0 16px;border-right:1.5px solid var(--gray200);
+  height:58px;min-width:120px;flex-shrink:0;
+}
+.city-chip select{
+  border:none;background:transparent;
+  font-family:var(--ff-body);font-size:.9rem;font-weight:700;
+  color:var(--navy);cursor:pointer;outline:none;
+}
+.divider-dot{
+  width:1.5px;height:28px;background:var(--gray300);flex-shrink:0;
+}
+.search-input-wrap{flex:1;display:flex;align-items:center;padding:0 16px;gap:10px}
+.search-input-wrap input{
+  flex:1;border:none;outline:none;
+  font-family:var(--ff-body);font-size:1rem;color:var(--gray700);
+  background:transparent;
+}
+.search-input-wrap input::placeholder{color:var(--gray300)}
+.search-btn{
+  width:52px;height:52px;border-radius:14px;
+  background:var(--navy);border:none;
+  display:grid;place-items:center;margin:3px;
+  color:var(--white);transition:background .2s,transform .15s;
+  flex-shrink:0;
+}
+.search-btn:hover{background:var(--teal);transform:scale(1.04)}
+
+/* Popular searches */
+.popular-tags{
+  display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+  justify-content:center;margin-bottom:4px;
+}
+.pop-label{font-size:.8rem;font-weight:600;color:var(--gray500)}
+.pop-tag{
+  padding:5px 14px;border-radius:999px;
+  border:1.5px solid var(--gray200);background:var(--white);
+  font-size:.8rem;font-weight:600;color:var(--gray700);cursor:pointer;
+  transition:border-color .15s,color .15s,background .15s;
+}
+.pop-tag:hover{border-color:var(--teal);color:var(--teal);background:rgba(21,154,156,.06)}
+
+/* Tagline */
+.tagline{
+  text-align:center;
+  font-family:var(--ff-head);
+  font-size:clamp(1.7rem,4.5vw,3rem);
+  font-weight:800;
+  color:var(--navy);
+  line-height:1.18;
+  margin-bottom:12px;
+}
+.tagline em{color:var(--teal);font-style:normal}
+
+.sub-tagline{
+  text-align:center;
+  font-size:.95rem;color:var(--ocean);
+  font-weight:400;letter-spacing:.3px;
+  margin-bottom:28px;
+}
+
+/* Dotted divider */
+.dot-divider{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin:0 auto 32px;
+}
+.dot-divider span{
+  width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.5;
+}
+.dot-divider span:nth-child(3){opacity:1;width:8px;height:8px}
+
+/* CTA */
+.cta-wrap{display:flex;justify-content:center}
+.cta-btn{
+  background:var(--navy);color:var(--white);
+  font-family:var(--ff-head);font-size:1rem;font-weight:700;
+  padding:16px 44px;border-radius:var(--radius-xl);border:none;
+  letter-spacing:.5px;
+  box-shadow:0 8px 24px rgba(11,59,96,.28);
+  transition:background .2s,transform .15s,box-shadow .2s;
+}
+.cta-btn:hover{background:var(--teal);transform:translateY(-2px);box-shadow:0 12px 32px rgba(21,154,156,.35)}
+
+/* ──────────────────────────────────────────
+   OUR SERVICES
+────────────────────────────────────────── */
+.services{padding:56px 24px;background:var(--white)}
+.services-inner{max-width:900px;margin:0 auto}
+.section-label{
+  font-family:var(--ff-head);font-size:.72rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:var(--teal);
+  margin-bottom:8px;
+}
+.section-title{
+  font-family:var(--ff-head);font-size:clamp(1.4rem,3vw,2rem);
+  font-weight:800;color:var(--navy);margin-bottom:16px;
+}
+.services-desc{
+  font-size:.97rem;line-height:1.75;color:var(--gray500);
+  max-width:640px;margin-bottom:28px;
+}
+.service-chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{
+  padding:10px 22px;border-radius:999px;
+  border:2px solid var(--navy);
+  font-family:var(--ff-head);font-size:.85rem;font-weight:700;color:var(--navy);
+  background:transparent;
+  transition:background .2s,color .2s,border-color .2s,transform .15s;
+}
+.chip:hover,.chip.active{background:var(--navy);color:var(--white);transform:translateY(-1px)}
+.chip.teal{border-color:var(--teal)}
+.chip.teal:hover,.chip.teal.active{background:var(--teal);border-color:var(--teal);color:#fff}
+
+/* ──────────────────────────────────────────
+   TESTIMONIALS
+────────────────────────────────────────── */
+.testimonials{
+  background:var(--sky-bg);
+  padding:56px 0;overflow:hidden;
+}
+.testimonials-header{
+  padding:0 24px;
+  max-width:900px;margin:0 auto 32px;
+  display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.rating-badge{
+  display:flex;align-items:center;gap:8px;
+  background:var(--white);border-radius:999px;
+  padding:8px 16px;box-shadow:var(--shadow-sm);
+  border:1.5px solid var(--sky);
+}
+.stars{color:var(--gold);font-size:1rem;letter-spacing:1px}
+.rating-text{font-family:var(--ff-head);font-size:.9rem;font-weight:700;color:var(--navy)}
+
+/* Sliding track */
+.slide-track-wrap{position:relative;overflow:hidden}
+.slide-track{
+  display:flex;gap:16px;
+  animation:slide-left 32s linear infinite;
+  width:max-content;
+  padding:8px 24px;
+}
+.slide-track:hover{animation-play-state:paused}
+@keyframes slide-left{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+.review-card{
+  min-width:280px;max-width:280px;
+  background:var(--white);border-radius:var(--radius-md);
+  padding:20px;box-shadow:var(--shadow-sm);
+  border:1.5px solid var(--sky);
+  flex-shrink:0;
+}
+.review-stars{color:var(--gold);font-size:.85rem;margin-bottom:8px}
+.review-text{font-size:.88rem;line-height:1.6;color:var(--gray700);margin-bottom:14px}
+.reviewer{display:flex;align-items:center;gap:10px}
+.avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--ocean));
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:.8rem;
+  flex-shrink:0;
+}
+.reviewer-info{font-size:.8rem}
+.reviewer-name{font-weight:700;color:var(--navy)}
+.reviewer-city{color:var(--gray500)}
+
+/* ──────────────────────────────────────────
+   PARTNERS
+────────────────────────────────────────── */
+.partners{padding:52px 0;background:var(--white);overflow:hidden}
+.partners-header{padding:0 24px;max-width:900px;margin:0 auto 28px;}
+.partner-track-wrap{position:relative;overflow:hidden}
+.partner-track{
+  display:flex;gap:20px;align-items:center;
+  animation:slide-left 22s linear infinite;
+  width:max-content;padding:8px 24px;
+}
+.partner-track:hover{animation-play-state:paused}
+.partner-logo{
+  height:52px;min-width:140px;
+  background:var(--gray50);border:1.5px solid var(--gray100);
+  border-radius:var(--radius-md);
+  display:grid;place-items:center;
+  font-family:var(--ff-head);font-size:.85rem;font-weight:700;color:var(--gray500);
+  flex-shrink:0;padding:0 24px;
+  transition:border-color .2s,color .2s;
+}
+.partner-logo:hover{border-color:var(--teal);color:var(--teal)}
+
+/* ──────────────────────────────────────────
+   WHY US
+────────────────────────────────────────── */
+.why-us{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--ocean) 100%);
+  padding:64px 24px;
+}
+.why-us-inner{max-width:900px;margin:0 auto}
+.why-us .section-label{color:var(--gold);opacity:.85}
+.why-us .section-title{color:var(--white)}
+.why-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;margin-top:36px;
+}
+.why-card{
+  background:rgba(255,255,255,.07);
+  border:1.5px solid rgba(255,255,255,.14);
+  border-radius:var(--radius-lg);
+  padding:28px 24px;
+  transition:background .2s,transform .2s;
+}
+.why-card:hover{background:rgba(255,255,255,.12);transform:translateY(-3px)}
+.why-num{
+  font-family:var(--ff-head);font-size:2.4rem;font-weight:800;
+  color:var(--gold);opacity:.7;line-height:1;margin-bottom:14px;
+}
+.why-card-title{
+  font-family:var(--ff-head);font-size:1rem;font-weight:700;
+  color:var(--white);margin-bottom:8px;
+}
+.why-card-desc{font-size:.85rem;line-height:1.65;color:rgba(255,255,255,.7)}
+
+/* ──────────────────────────────────────────
+   PARTNER CTA STRIP
+────────────────────────────────────────── */
+.partner-cta{
+  background:linear-gradient(100deg,#DBEAFE 0%,#BAE6FD 100%);
+  padding:52px 24px;text-align:center;
+}
+.partner-cta-title{
+  font-family:var(--ff-head);font-size:clamp(1.3rem,3vw,1.9rem);
+  font-weight:800;color:var(--navy);line-height:1.3;margin-bottom:8px;
+}
+.partner-cta-sub{font-size:.95rem;color:var(--ocean);margin-bottom:28px}
+.contact-btn{
+  background:var(--rose);color:var(--white);
+  font-family:var(--ff-head);font-size:.95rem;font-weight:700;
+  padding:14px 40px;border-radius:var(--radius-xl);border:none;
+  box-shadow:0 6px 20px rgba(248,113,113,.35);
+  transition:transform .15s,box-shadow .2s,background .2s;
+}
+.contact-btn:hover{background:#EF4444;transform:translateY(-2px);box-shadow:0 10px 28px rgba(239,68,68,.4)}
+
+/* ──────────────────────────────────────────
+   FOOTER
+────────────────────────────────────────── */
+footer{
+  background:var(--sky-bg);
+  border-top:1.5px solid var(--sky);
+  padding:48px 24px 24px;
+}
+.footer-grid{
+  max-width:1000px;margin:0 auto;
+  display:grid;grid-template-columns:1.6fr 1fr 1fr;
+  gap:40px;margin-bottom:40px;
+}
+.footer-col-title{
+  font-family:var(--ff-head);font-size:.75rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--ocean);margin-bottom:16px;
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-links a{
+  font-size:.88rem;color:var(--gray500);
+  display:flex;align-items:center;gap:6px;
+  transition:color .2s;
+}
+.footer-links a:hover{color:var(--navy)}
+.footer-links a::before{
+  content:"";width:4px;height:4px;border-radius:50%;
+  background:var(--teal);flex-shrink:0;
+}
+
+/* Contact column */
+.contact-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:.88rem;color:var(--gray700);
+  margin-bottom:12px;
+}
+.contact-item svg{flex-shrink:0;margin-top:1px}
+
+/* Social icons */
+.social-row{display:flex;gap:8px;margin-top:8px}
+.social-btn{
+  width:34px;height:34px;border-radius:9px;
+  background:var(--white);border:1.5px solid var(--gray200);
+  display:grid;place-items:center;
+  color:var(--gray500);font-size:.78rem;font-weight:700;
+  font-family:var(--ff-head);
+  transition:background .2s,color .2s,border-color .2s;
+}
+.social-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* Footer bottom bar */
+.footer-bottom{
+  max-width:1000px;margin:0 auto;
+  border-top:1.5px solid var(--sky);
+  padding-top:20px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.footer-bottom p{font-size:.8rem;color:var(--gray500)}
+
+/* ──────────────────────────────────────────
+   RESPONSIVE
+────────────────────────────────────────── */
+@media(max-width:680px){
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .footer-grid > *:last-child{grid-column:1/-1}
+  .tagline{font-size:1.55rem}
+  .search-bar{flex-wrap:wrap;border-radius:var(--radius-md)}
+  .city-chip{border-right:none;border-bottom:1.5px solid var(--gray100);width:100%;min-width:unset}
+  .divider-dot{display:none}
+  .why-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     HEADER — fixed at top always
+════════════════════════════════════════ -->
+<header class="topbar" id="stickyNav">
+  <a href="/" class="logo">
+    <div class="logo-icon">T</div>
+    <span class="logo-text">Test<span>Near</span></span>
+  </a>
+  <div class="topbar-right">
+    <div class="city-pill">
+      <span class="pin-svg">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
+          <path d="M12 21s7-5.2 7-11A7 7 0 1 0 5 10c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="2.2"/>
+          <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </span>
+      <select id="cityTop" aria-label="Select city">
+        <option value="" disabled selected>Select City</option>
+        <option>Delhi</option><option>Jaipur</option><option>Mumbai</option>
+        <option>Bengaluru</option><option>Lucknow</option><option>Hyderabad</option>
+        <option>Pune</option><option>Chennai</option>
+      </select>
+    </div>
+    <!-- Language Switcher -->
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang-btn" id="langBtn" aria-label="Switch language" aria-expanded="false">
+        <span class="lang-globe">🌐</span>
+        <span id="langLabel">EN</span>
+        <svg viewBox="0 0 10 6" width="10" height="6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="lang-dropdown" id="langDropdown" role="listbox">
+        <div class="lang-option active" data-lang="en" role="option"><span class="lang-flag">🇬🇧</span> English</div>
+        <div class="lang-option" data-lang="hi" role="option"><span class="lang-flag">🇮🇳</span> हिन्दी</div>
+        <div class="lang-option" data-lang="zh" role="option"><span class="lang-flag">🇨🇳</span> 中文</div>
+        <div class="lang-option" data-lang="bn" role="option"><span class="lang-flag">🇧🇩</span> বাংলা</div>
+        <div class="lang-option" data-lang="ta" role="option"><span class="lang-flag">🇮🇳</span> தமிழ்</div>
+      </div>
+    </div>
+    <button class="hamburger-nav" id="menuBtn2" aria-label="Open menu">
+      <div class="ham-lines">
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+      </div>
+    </button>
+  </div>
+</header>
+
+<!-- SIDE DRAWER -->
+<div class="drawer-overlay" id="overlay"></div>
+<nav class="drawer" id="drawer" aria-label="Site navigation">
+  <button class="drawer-close" id="closeBtn" aria-label="Close menu">✕</button>
+  <a href="#">🏠 Home</a>
+  <a href="#">🔬 Our Services</a>
+  <a href="#">🏥 Our Partners</a>
+  <a href="#">💬 Testimonials</a>
+  <div class="drawer-divider"></div>
+  <a href="#">📋 Blog</a>
+  <a href="#">❓ FAQ</a>
+  <a href="#">📞 Contact Us</a>
+  <div class="drawer-divider"></div>
+  <a href="#">🤝 Partner with Us</a>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     SPLASH — full screen, logo + messaging
+════════════════════════════════════════ -->
+<section class="splash">
+  <!-- Centre messaging -->
+  <div class="splash-body">
+    <div class="splash-badge">India's First Medical Test Price Comparator</div>
+    <h1 class="splash-headline">Right Test.<br>Right Lab.<br><em>Fair Price.</em></h1>
+    <p class="splash-sub">No confusion. No pressure. Just clarity —<br>for every city, every family.</p>
+    <div class="splash-trust">
+      <span>✅ NABL Verified Labs</span>
+      <span>✅ 4 National Chains</span>
+      <span>✅ 100% Free to Use</span>
+    </div>
+    <div class="scroll-hint" id="scrollHint">
+      <span class="scroll-text">Scroll to search</span>
+      <div class="scroll-arrow">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+          <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     HERO — search section (after scroll)
+════════════════════════════════════════ -->
+<section class="hero" id="searchSection">
+  <div class="hero-inner">
+
+    <div class="search-dots" aria-label="Section indicator">
+      <button type="button" class="search-dot" aria-label="Indicator 1" data-dot="0"></button>
+      <button type="button" class="search-dot" aria-label="Indicator 2" data-dot="1"></button>
+      <button type="button" class="search-dot active" aria-label="Indicator 3" data-dot="2" aria-current="true"></button>
+      <button type="button" class="search-dot" aria-label="Indicator 4" data-dot="3"></button>
+      <button type="button" class="search-dot" aria-label="Indicator 5" data-dot="4"></button>
+      <button type="button" class="search-dot" aria-label="Indicator 6" data-dot="5"></button>
+      <button type="button" class="search-dot" aria-label="Indicator 7" data-dot="6"></button>
+    </div>
+
+    <h2 class="search-header">Search and compare test prices</h2>
+
+    <!-- Search bar -->
+    <div class="search-bar" role="search">
+      <div class="city-chip">
+        <span class="pin-svg">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+            <path d="M12 21s7-5.2 7-11A7 7 0 1 0 5 10c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="2.2"/>
+            <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </span>
+        <select id="cityHero" aria-label="Select city">
+          <option value="Delhi" selected>Delhi</option>
+          <option>Jaipur</option><option>Mumbai</option><option>Bengaluru</option>
+          <option>Lucknow</option><option>Hyderabad</option><option>Pune</option><option>Chennai</option>
+        </select>
+      </div>
+      <div class="divider-dot"></div>
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" style="color:#9CA3AF;flex-shrink:0">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+          <path d="m17 17 3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search test — e.g. CBC, Vitamin D, HbA1c…" autocomplete="off"/>
+      </div>
+      <button class="search-btn" aria-label="Search" onclick="doSearch()">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+          <circle cx="11" cy="11" r="7" stroke="white" stroke-width="2.2"/>
+          <path d="m17 17 3 3" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Popular searches -->
+    <div class="popular-tags">
+      <span class="pop-label">Popular:</span>
+      <button class="pop-tag" onclick="fillSearch('CBC')">CBC</button>
+      <button class="pop-tag" onclick="fillSearch('Vitamin D')">Vitamin D</button>
+      <button class="pop-tag" onclick="fillSearch('HbA1c')">HbA1c</button>
+      <button class="pop-tag" onclick="fillSearch('Thyroid')">Thyroid</button>
+      <button class="pop-tag" onclick="fillSearch('Lipid Profile')">Lipid Profile</button>
+    </div>
+
+    <!-- Dot divider -->
+    <div class="dot-divider" style="margin:32px auto 28px">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-wrap">
+      <button class="cta-btn" onclick="doSearch()">Get Best Prices →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     OUR SERVICES
+════════════════════════════════════════ -->
+<section class="services">
+  <div class="services-inner">
+    <p class="section-label">What We Offer</p>
+    <h2 class="section-title">Our Services</h2>
+    <p class="services-desc">
+      TestNear helps you find the most trusted diagnostic labs near you — and compare prices before you book.
+      From routine blood panels to advanced imaging, we cover all major diagnostic services so you never overpay
+      or walk into the wrong lab. Transparent, verified pricing. No hidden charges. Just simple, honest comparison.
+    </p>
+    <div class="service-chips">
+      <button class="chip active">🩸 Blood Tests</button>
+      <button class="chip teal">🔊 Ultrasounds</button>
+      <button class="chip">🧲 MRI</button>
+      <button class="chip">🖥️ CT Scan</button>
+      <button class="chip teal">💉 Full Body Checkup</button>
+      <button class="chip">🏥 Health Packages</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════ -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <div>
+      <p class="section-label">Patient Stories</p>
+      <h2 class="section-title">What Our Patients Say</h2>
+    </div>
+    <div class="rating-badge">
+      <span class="stars">★★★★½</span>
+      <span class="rating-text">Rated 4.5 / 5</span>
+    </div>
+  </div>
+
+  <div class="slide-track-wrap">
+    <div class="slide-track" id="reviewTrack">
+      <!-- Reviews (duplicated for infinite loop) -->
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I saved ₹800 on a Thyroid panel just by comparing three labs. This is exactly what I needed in Jaipur."</p><div class="reviewer"><div class="avatar">P</div><div class="reviewer-info"><div class="reviewer-name">Priya Sharma</div><div class="reviewer-city">Jaipur</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Finally a website that shows real prices! No more calling 5 labs. Got HbA1c for my father at half the price."</p><div class="reviewer"><div class="avatar">R</div><div class="reviewer-info"><div class="reviewer-name">Rajesh Kumar</div><div class="reviewer-city">Lucknow</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Super simple to use. My mother is not tech-savvy and she figured it out herself. Compare prices is great."</p><div class="reviewer"><div class="avatar">A</div><div class="reviewer-info"><div class="reviewer-name">Anita Verma</div><div class="reviewer-city">Delhi</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"CBC test was shown from 4 labs. I chose the NABL one with home collection at the lowest price. Brilliant!"</p><div class="reviewer"><div class="avatar">M</div><div class="reviewer-info"><div class="reviewer-name">Mohan Das</div><div class="reviewer-city">Kanpur</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Transparent and trustworthy. Finally someone doing good for normal people. Shared with my entire family."</p><div class="reviewer"><div class="avatar">S</div><div class="reviewer-info"><div class="reviewer-name">Sunita Agrawal</div><div class="reviewer-city">Bhopal</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Compared Vitamin D test across Apollo, Lal, Redcliffe — saved ₹350. Will recommend to all my colleagues."</p><div class="reviewer"><div class="avatar">V</div><div class="reviewer-info"><div class="reviewer-name">Vivek Mishra</div><div class="reviewer-city">Varanasi</div></div></div></div>
+      <!-- Duplicate for seamless loop -->
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I saved ₹800 on a Thyroid panel just by comparing three labs. This is exactly what I needed in Jaipur."</p><div class="reviewer"><div class="avatar">P</div><div class="reviewer-info"><div class="reviewer-name">Priya Sharma</div><div class="reviewer-city">Jaipur</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Finally a website that shows real prices! No more calling 5 labs. Got HbA1c for my father at half the price."</p><div class="reviewer"><div class="avatar">R</div><div class="reviewer-info"><div class="reviewer-name">Rajesh Kumar</div><div class="reviewer-city">Lucknow</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Super simple to use. My mother is not tech-savvy and she figured it out herself. Compare prices is great."</p><div class="reviewer"><div class="avatar">A</div><div class="reviewer-info"><div class="reviewer-name">Anita Verma</div><div class="reviewer-city">Delhi</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"CBC test was shown from 4 labs. I chose the NABL one with home collection at the lowest price. Brilliant!"</p><div class="reviewer"><div class="avatar">M</div><div class="reviewer-info"><div class="reviewer-name">Mohan Das</div><div class="reviewer-city">Kanpur</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Transparent and trustworthy. Finally someone doing good for normal people. Shared with my entire family."</p><div class="reviewer"><div class="avatar">S</div><div class="reviewer-info"><div class="reviewer-name">Sunita Agrawal</div><div class="reviewer-city">Bhopal</div></div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Compared Vitamin D test across Apollo, Lal, Redcliffe — saved ₹350. Will recommend to all my colleagues."</p><div class="reviewer"><div class="avatar">V</div><div class="reviewer-info"><div class="reviewer-name">Vivek Mishra</div><div class="reviewer-city">Varanasi</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     OUR PARTNERS
+════════════════════════════════════════ -->
+<section class="partners">
+  <div class="partners-header">
+    <p class="section-label">Lab Network</p>
+    <h2 class="section-title">Our Partners</h2>
+  </div>
+  <div class="partner-track-wrap">
+    <div class="partner-track">
+      <div class="partner-logo">Apollo Diagnostics</div>
+      <div class="partner-logo">Dr. Lal PathLabs</div>
+      <div class="partner-logo">Metropolis Labs</div>
+      <div class="partner-logo">Redcliffe Labs</div>
+      <div class="partner-logo">SRL Diagnostics</div>
+      <div class="partner-logo">Thyrocare</div>
+      <div class="partner-logo">Agilus Diagnostics</div>
+      <div class="partner-logo">Pathkind Labs</div>
+      <!-- Duplicate -->
+      <div class="partner-logo">Apollo Diagnostics</div>
+      <div class="partner-logo">Dr. Lal PathLabs</div>
+      <div class="partner-logo">Metropolis Labs</div>
+      <div class="partner-logo">Redcliffe Labs</div>
+      <div class="partner-logo">SRL Diagnostics</div>
+      <div class="partner-logo">Thyrocare</div>
+      <div class="partner-logo">Agilus Diagnostics</div>
+      <div class="partner-logo">Pathkind Labs</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     WHY TESTNEAR
+════════════════════════════════════════ -->
+<section class="why-us">
+  <div class="why-us-inner">
+    <p class="section-label">Our Promise</p>
+    <h2 class="section-title" style="color:#fff">Why TestNear?</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">01.</div>
+        <div class="why-card-title">Price Transparency</div>
+        <p class="why-card-desc">We show you real, verified prices from multiple labs side by side — no hidden charges, no surprises at the counter.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">02.</div>
+        <div class="why-card-title">Trusted Lab Network</div>
+        <p class="why-card-desc">Only NABL-accredited and verified labs. We vet every partner so you don't have to — your health is too important to guess.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">03.</div>
+        <div class="why-card-title">Zero Pressure Booking</div>
+        <p class="why-card-desc">Compare freely. Book when you're ready — directly on the lab's website via our deep-links. No middleman, no upsell.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">04.</div>
+        <div class="why-card-title">Community Verified</div>
+        <p class="why-card-desc">Prices verified by real patients uploading bills. "Verified by Bills" badge so you know the price is accurate today.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PARTNER CTA STRIP
+════════════════════════════════════════ -->
+<section class="partner-cta">
+  <p class="section-label" style="justify-content:center;display:block;text-align:center">For Labs & Clinics</p>
+  <h2 class="partner-cta-title">TestNear supports small to medium diagnostic enterprises.<br>Want to partner with us?</h2>
+  <p class="partner-cta-sub">List your lab, reach thousands of patients, and grow your bookings.</p>
+  <button class="contact-btn" onclick="window.location.href='mailto:partner@testnear.in'">Contact Us Now! →</button>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+
+    <!-- Quick Links -->
+    <div>
+      <p class="footer-col-title">Quick Links</p>
+      <ul class="footer-links">
+        <li><a href="#">Our Company</a></li>
+        <li><a href="#">Companies / Labs</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Refund Policy</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+
+    <!-- Location / Contact -->
+    <div>
+      <p class="footer-col-title">Location &amp; Contact</p>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" style="color:#159A9C"><path d="M12 21s7-5.2 7-11A7 7 0 1 0 5 10c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/></svg>
+        123 Health Lane, New Delhi, 110001
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" style="color:#159A9C"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.09 3h3a2 2 0 0 1 2 1.72 13 13 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L9.09 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 13 13 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z" stroke="currentColor" stroke-width="2"/></svg>
+        +91 98765 43210
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" style="color:#25D366"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="1.8"/></svg>
+        WhatsApp: +91 98765 43210
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" style="color:#159A9C"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="m2 7 10 7 10-7" stroke="currentColor" stroke-width="2"/></svg>
+        <span>Email protected</span>
+      </div>
+    </div>
+
+    <!-- Other Links + Social -->
+    <div>
+      <p class="footer-col-title">Other Links</p>
+      <ul class="footer-links" style="margin-bottom:24px">
+        <li><a href="#">🤰 Pregnancy Due Calculator</a></li>
+        <li><a href="#">📊 BMI Calculator</a></li>
+        <li><a href="#">💊 Test Preparation Guide</a></li>
+      </ul>
+      <p class="footer-col-title">Social Media</p>
+      <div class="social-row">
+        <a class="social-btn" href="#" aria-label="Facebook">f</a>
+        <a class="social-btn" href="#" aria-label="Instagram">in</a>
+        <a class="social-btn" href="#" aria-label="LinkedIn">Li</a>
+        <a class="social-btn" href="#" aria-label="Twitter/X">𝕏</a>
+        <a class="social-btn" href="#" aria-label="YouTube">▶</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 TestNear. All rights reserved.</p>
+    <p style="font-size:.75rem;color:#9CA3AF">Built with ❤️ for every Indian family</p>
+  </div>
+</footer>
+
+<script>
+  // Drawer
+  const overlay = document.getElementById('overlay');
+  const drawer = document.getElementById('drawer');
+  const menuBtn2 = document.getElementById('menuBtn2');
+  const closeBtn = document.getElementById('closeBtn');
+
+  function openDrawer(){ overlay.classList.add('open'); drawer.classList.add('open'); }
+  function closeDrawer(){ overlay.classList.remove('open'); drawer.classList.remove('open'); }
+
+  menuBtn2.addEventListener('click', openDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  // Smooth scroll hint
+  document.getElementById('scrollHint').addEventListener('click', () => {
+    document.getElementById('searchSection').scrollIntoView({behavior:'smooth'});
+  });
+
+  // Search helpers
+  function fillSearch(val){ document.getElementById('searchInput').value = val; }
+  function doSearch(){
+    const city = document.getElementById('cityHero').value || 'Delhi';
+    const q = document.getElementById('searchInput').value.trim();
+    const params = new URLSearchParams();
+    params.set('city', city);
+    if(q) params.set('q', q);
+    window.location.href = 'results.html?' + params.toString();
+  }
+
+  // Language switcher
+  const langBtn = document.getElementById('langBtn');
+  const langDropdown = document.getElementById('langDropdown');
+  const langLabel = document.getElementById('langLabel');
+
+  langBtn.addEventListener('click', () => {
+    const open = langDropdown.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  document.addEventListener('click', (e) => {
+    if(!document.getElementById('langSwitcher').contains(e.target)){
+      langDropdown.classList.remove('open');
+      langBtn.setAttribute('aria-expanded','false');
+    }
+  });
+
+  // Minimal translation hook (UI only)
+  const T = {};
+
+  // Search section dots (CSS auto animation + click to set active)
+  const dotWrap = document.querySelector('.search-dots');
+  const dots = Array.from(document.querySelectorAll('.search-dot'));
+
+  function setActiveDot(idx){
+    dots.forEach((d,i) => {
+      d.classList.toggle('active', i === idx);
+      if(i === idx) d.setAttribute('aria-current','true');
+      else d.removeAttribute('aria-current');
+    });
+  }
+
+  if(dotWrap){
+    // enable CSS-based auto indicator by default
+    dotWrap.classList.add('auto');
+  }
+
+  dots.forEach((d) => {
+    d.addEventListener('click', () => {
+      // manual override
+      if(dotWrap) dotWrap.classList.remove('auto');
+      const idx = Number(d.getAttribute('data-dot'));
+      setActiveDot(Number.isFinite(idx) ? idx : 0);
+    });
+  });
+
+  // gentle loop like an indicator (pauses on hover)
+  let dotIdx = dots.findIndex(d => d.classList.contains('active'));
+  if(dotIdx < 0) dotIdx = 0;
+  let dotTimer = setInterval(() => {
+    dotIdx = (dotIdx + 1) % Math.max(dots.length, 1);
+    setActiveDot(dotIdx);
+  }, 1800);
+
+  if(dotWrap){
+    dotWrap.addEventListener('mouseenter', () => { clearInterval(dotTimer); });
+    dotWrap.addEventListener('mouseleave', () => {
+      clearInterval(dotTimer);
+      dotTimer = setInterval(() => {
+        dotIdx = (dotIdx + 1) % Math.max(dots.length, 1);
+        setActiveDot(dotIdx);
+      }, 1800);
+    });
+  }
+
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+      const lang = opt.dataset.lang;
+      langLabel.textContent = (lang === 'en') ? 'EN' : (lang === 'hi' ? 'हि' : (lang === 'zh' ? '中' : (lang === 'bn' ? 'বাং' : 'தமி')));
+      langDropdown.classList.remove('open');
+      langBtn.setAttribute('aria-expanded','false');
+    });
+  });
+</script>
+</body>
+</html>

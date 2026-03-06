@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lume Health - Compare Test Prices</title>
+  <style>
+    :root{
+      --navy:#243f6b;
+      --teal:#5ea7ab;
+      --text:#24364b;
+      --muted:#6b7280;
+      --line:#d9dee7;
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --chip:#eef4ff;
+      --shadow:0 8px 24px rgba(25, 42, 70, 0.06);
+    }
+
+    *{box-sizing:border-box}
+
+    html,body{
+      margin:0;
+      padding:0;
+      font-family:Inter, Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .topbar{
+      background:#fff;
+      border-bottom:1px solid var(--line);
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+
+    .topbar-inner{
+      max-width:1440px;
+      margin:0 auto;
+      padding:16px 32px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:-0.3px;
+      color:var(--navy);
+      white-space:nowrap;
+    }
+
+    .brand span{
+      color:var(--teal);
+    }
+
+    .top-search{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-left:auto;
+    }
+
+    .field,
+    .field-input{
+      height:52px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:0 16px;
+      background:#fff;
+      font-size:16px;
+      color:#111827;
+      outline:none;
+      min-width:230px;
+    }
+
+    .search-btn{
+      height:52px;
+      border:none;
+      border-radius:14px;
+      padding:0 26px;
+      background:var(--navy);
+      color:#fff;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.2s ease;
+    }
+
+    .search-btn:hover{
+      opacity:0.95;
+      transform:translateY(-1px);
+    }
+
+    .page{
+      max-width:1440px;
+      margin:0 auto;
+      padding:26px 32px 40px;
+    }
+
+    .hero{
+      margin-bottom:22px;
+    }
+
+    .hero h1{
+      margin:0 0 8px;
+      font-size:40px;
+      line-height:1.1;
+      letter-spacing:-1px;
+      color:var(--navy);
+      font-weight:800;
+    }
+
+    .hero p{
+      margin:0;
+      font-size:18px;
+      color:var(--muted);
+    }
+
+    .content{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:24px;
+      align-items:start;
+    }
+
+    .sidebar{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:94px;
+    }
+
+    .sidebar h3{
+      margin:0 0 18px;
+      font-size:20px;
+      line-height:1.2;
+      color:var(--navy);
+    }
+
+    .filter-group{
+      margin-bottom:18px;
+    }
+
+    .filter-label{
+      display:block;
+      margin-bottom:10px;
+      font-size:15px;
+      color:var(--muted);
+    }
+
+    .select-full{
+      width:100%;
+      height:52px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:0 16px;
+      background:#fff;
+      font-size:16px;
+      outline:none;
+    }
+
+    .clear-btn{
+      width:100%;
+      height:48px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      color:var(--navy);
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .results-wrap{
+      min-width:0;
+    }
+
+    .results-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin:4px 0 18px;
+      font-size:18px;
+      color:var(--muted);
+    }
+
+    .cards{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .card-top-value{
+      position:relative;
+      overflow:hidden;
+    }
+
+    .top-value-ribbon{
+      position:absolute;
+      top:18px;
+      right:-38px;
+      background:var(--navy);
+      color:#fff;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.3px;
+      padding:8px 42px;
+      transform:rotate(35deg);
+      box-shadow:0 6px 18px rgba(36,63,107,.18);
+      z-index:2;
+    }
+
+    .card-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .card-title{
+      min-width:0;
+      flex:1;
+    }
+
+    .lab-name{
+      font-size:21px;
+      font-weight:800;
+      color:var(--navy);
+      margin:0 0 6px;
+    }
+
+    .test-name{
+      font-size:17px;
+      color:var(--muted);
+      margin:0 0 12px;
+      line-height:1.4;
+    }
+
+    .badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .badge{
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--chip);
+      color:var(--navy);
+      border:1px solid #d9e6ff;
+      font-size:13px;
+      font-weight:700;
+    }
+
+.price-area{
+  min-width:180px;
+  text-align:right;
+  flex-shrink:0;
+  margin-right:84px;
+  margin-top:60px;
+
+}
+
+    .price{
+      font-size:44px;
+      line-height:1;
+      font-weight:800;
+      color:var(--teal);
+      letter-spacing:-1px;
+      margin:0 0 6px;
+    }
+
+    .price-note{
+      font-size:16px;
+      color:var(--muted);
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .btn{
+      min-height:52px;
+      padding:0 18px;
+      border-radius:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      border:1px solid transparent;
+      transition:0.2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:var(--navy);
+      color:#fff;
+    }
+
+    .state-box{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      color:var(--muted);
+      box-shadow:var(--shadow);
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    @media (max-width: 1100px){
+      .content{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        position:static;
+      }
+    }
+
+    @media (max-width: 768px){
+      .topbar-inner,
+      .page{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .top-search{
+        width:100%;
+      }
+
+      .field,
+      .field-input,
+      .search-btn{
+        width:100%;
+        min-width:0;
+      }
+
+      .hero h1{
+        font-size:32px;
+      }
+
+      .hero p{
+        font-size:16px;
+      }
+
+      .card-header{
+        flex-direction:column;
+      }
+
+      .price-area{
+        text-align:left;
+        min-width:0;
+      }
+
+      .price{
+        font-size:38px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="./index.html" class="brand">Lume <span>Health</span></a>
+
+      <div class="top-search">
+        <select id="cityInput" class="field" aria-label="Select city">
+          <option value="Delhi">Delhi</option>
+          <option value="Jaipur">Jaipur</option>
+        </select>
+
+        <input
+          id="testInput"
+          class="field-input"
+          type="text"
+          placeholder="Search test, e.g. CBC"
+          aria-label="Search test"
+        />
+
+        <button id="searchBtn" class="search-btn">Search</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <h1 id="pageTitle">Compare test prices</h1>
+      <p id="pageSubtitle">Showing available results for your city.</p>
+    </section>
+
+    <section class="content">
+      <aside class="sidebar">
+        <h3>Refine comparison</h3>
+
+        <div class="filter-group">
+          <label class="filter-label" for="modeSelect">Sort by</label>
+          <select id="modeSelect" class="select-full">
+            <option value="best">Best</option>
+            <option value="cheap">Cheapest</option>
+            <option value="high">Highest Price</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="priceRangeSelect">Price range</label>
+          <select id="priceRangeSelect" class="select-full">
+            <option value="all">All prices</option>
+            <option value="under300">Under ₹300</option>
+            <option value="300to500">₹300 - ₹500</option>
+            <option value="500to1000">₹500 - ₹1000</option>
+            <option value="above1000">Above ₹1000</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="labFilterSelect">Lab</label>
+          <select id="labFilterSelect" class="select-full">
+            <option value="all">All labs</option>
+          </select>
+        </div>
+
+        <button id="clearFiltersBtn" class="clear-btn">Clear Filters</button>
+      </aside>
+
+      <div class="results-wrap">
+        <div class="results-top">
+          <div id="statsText">Loading results...</div>
+        </div>
+
+        <div id="loadingBox" class="state-box">Fetching comparison from your local backend...</div>
+        <div id="errorBox" class="state-box hidden"></div>
+        <div id="emptyBox" class="state-box hidden">No matching test results found for this city yet.</div>
+
+        <div id="cards" class="cards"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const BACKEND_BASE = "http://127.0.0.1:8000";
+
+    const cityInput = document.getElementById("cityInput");
+    const testInput = document.getElementById("testInput");
+    const searchBtn = document.getElementById("searchBtn");
+
+    const modeSelect = document.getElementById("modeSelect");
+    const priceRangeSelect = document.getElementById("priceRangeSelect");
+    const labFilterSelect = document.getElementById("labFilterSelect");
+    const clearFiltersBtn = document.getElementById("clearFiltersBtn");
+
+    const pageTitle = document.getElementById("pageTitle");
+    const pageSubtitle = document.getElementById("pageSubtitle");
+    const statsText = document.getElementById("statsText");
+
+    const loadingBox = document.getElementById("loadingBox");
+    const errorBox = document.getElementById("errorBox");
+    const emptyBox = document.getElementById("emptyBox");
+    const cards = document.getElementById("cards");
+
+    let allResults = [];
+
+    function getParams() {
+      const url = new URL(window.location.href);
+      return {
+        city: url.searchParams.get("city") || "Delhi",
+        q: url.searchParams.get("q") || "",
+        mode: url.searchParams.get("mode") || "best",
+        priceRange: url.searchParams.get("priceRange") || "all",
+        lab: url.searchParams.get("lab") || "all"
+      };
+    }
+
+    function updateURL() {
+      const params = new URLSearchParams();
+      params.set("city", cityInput.value);
+
+      const q = testInput.value.trim();
+      if (q) params.set("q", q);
+
+      params.set("mode", modeSelect.value);
+      params.set("priceRange", priceRangeSelect.value);
+      params.set("lab", labFilterSelect.value);
+
+      history.replaceState({}, "", "./results.html?" + params.toString());
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function cleanTestName(raw, searchTerm) {
+      const q = (searchTerm && String(searchTerm).trim()) ? String(searchTerm).trim() : "Test";
+      const fallback = `${q} Test`;
+
+      if (!raw || !String(raw).trim()) return fallback;
+
+      let text = String(raw).replace(/\s+/g, " ").trim();
+
+      text = text.replace(/₹\s?\d+(?:\.\d+)?/gi, " ");
+      text = text.replace(/\btest in [a-z\s]+/gi, " ");
+      text = text.replace(/\b(in|at)\s+(delhi|jaipur|hyderabad|ahmedabad|chennai|pune|kolkata|mumbai|bangalore|bengaluru|gurgaon|gurugram|noida)\b/gi, " ");
+      text = text.replace(/\b\d+\b/g, " ");
+      text = text.replace(/\s{2,}/g, " ").trim();
+
+      const lower = text.toLowerCase();
+
+      if (!text || text.length > 70) return fallback;
+      if (lower.includes("blood count") || lower.includes("complete blood count") || lower.includes("cbc")) {
+        return "Complete Blood Count (CBC)";
+      }
+
+      return text || fallback;
+    }
+
+    function getRibbonText() {
+      if (modeSelect.value === "cheap") return "Cheapest";
+      if (modeSelect.value === "high") return "Premium option";
+      return "Top value";
+    }
+
+    function populateLabFilter(items) {
+      const currentValue = labFilterSelect.value;
+      const labs = [...new Set(items.map(item => item.lab).filter(Boolean))].sort();
+
+      labFilterSelect.innerHTML = `<option value="all">All labs</option>`;
+      labs.forEach(lab => {
+        const option = document.createElement("option");
+        option.value = lab;
+        option.textContent = lab;
+        labFilterSelect.appendChild(option);
+      });
+
+      if ([...labFilterSelect.options].some(opt => opt.value === currentValue)) {
+        labFilterSelect.value = currentValue;
+      }
+    }
+
+    function applyFilters(items) {
+      let filtered = [...items];
+
+      if (priceRangeSelect.value !== "all") {
+        filtered = filtered.filter(item => {
+          const price = Number(item.price);
+          if (Number.isNaN(price)) return false;
+
+          if (priceRangeSelect.value === "under300") return price < 300;
+          if (priceRangeSelect.value === "300to500") return price >= 300 && price <= 500;
+          if (priceRangeSelect.value === "500to1000") return price > 500 && price <= 1000;
+          if (priceRangeSelect.value === "above1000") return price > 1000;
+
+          return true;
+        });
+      }
+
+      if (labFilterSelect.value !== "all") {
+        filtered = filtered.filter(item => item.lab === labFilterSelect.value);
+      }
+
+      if (modeSelect.value === "cheap") {
+        filtered.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
+      } else if (modeSelect.value === "high") {
+        filtered.sort((a, b) => (b.price ?? -Infinity) - (a.price ?? -Infinity));
+      } else {
+        filtered.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
+      }
+
+      return filtered;
+    }
+
+    function renderCards(items) {
+      cards.innerHTML = "";
+
+      if (!items.length) {
+        emptyBox.classList.remove("hidden");
+        return;
+      }
+
+      emptyBox.classList.add("hidden");
+
+      const ribbonText = getRibbonText();
+
+      items.forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        if (index === 0) {
+          card.classList.add("card-top-value");
+        }
+
+        const safeUrl = item.source_url || item.lab_website || "#";
+        const displayTestName = cleanTestName(item.test_raw, testInput.value.trim());
+
+        card.innerHTML = `
+          ${index === 0 ? `<div class="top-value-ribbon">${escapeHtml(ribbonText)}</div>` : ``}
+
+          <div class="card-header">
+            <div class="card-title">
+              <div class="lab-name">${escapeHtml(item.lab || "Unknown Lab")}</div>
+              <div class="test-name">${escapeHtml(displayTestName)}</div>
+              <div class="badges">
+                <span class="badge">${escapeHtml(cityInput.value)}</span>
+              </div>
+            </div>
+
+            <div class="price-area">
+              <div class="price">₹${escapeHtml(item.price ?? "—")}</div>
+              <div class="price-note">Current listed price</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">Visit Lab</a>
+          </div>
+        `;
+
+        cards.appendChild(card);
+      });
+    }
+
+    function renderFilteredResults() {
+      const filtered = applyFilters(allResults);
+
+      const prices = filtered
+        .map(item => Number(item.price))
+        .filter(price => !Number.isNaN(price));
+
+      const minPrice = prices.length ? Math.min(...prices) : "—";
+      const avgPrice = prices.length
+        ? (prices.reduce((sum, price) => sum + price, 0) / prices.length).toFixed(2)
+        : "—";
+
+      statsText.textContent = `${filtered.length} result(s) found • Lowest price: ₹${minPrice} • Average price: ₹${avgPrice}`;
+
+      renderCards(filtered);
+      updateURL();
+    }
+
+    async function fetchResults() {
+      loadingBox.classList.remove("hidden");
+      errorBox.classList.add("hidden");
+      emptyBox.classList.add("hidden");
+      cards.innerHTML = "";
+
+      const city = cityInput.value;
+      const q = testInput.value.trim();
+
+      pageTitle.textContent = q ? `Compare "${q}" test prices` : "Compare test prices";
+      pageSubtitle.textContent = `Showing available results for ${city}.`;
+
+      const apiUrl = new URL(BACKEND_BASE + "/search");
+      apiUrl.searchParams.set("city", city);
+      apiUrl.searchParams.set("mode", "cheap");
+
+      if (q) apiUrl.searchParams.set("test", q);
+
+      try {
+        const response = await fetch(apiUrl.toString());
+
+        if (!response.ok) {
+          throw new Error("Backend returned status " + response.status);
+        }
+
+        const data = await response.json();
+
+        loadingBox.classList.add("hidden");
+
+        allResults = Array.isArray(data.items) ? data.items : [];
+        populateLabFilter(allResults);
+        renderFilteredResults();
+      } catch (error) {
+        console.error(error);
+        loadingBox.classList.add("hidden");
+        errorBox.classList.remove("hidden");
+        errorBox.textContent = "Could not connect to local backend. Make sure FastAPI is running on http://127.0.0.1:8000";
+        statsText.textContent = "Results unavailable right now.";
+      }
+    }
+
+    function clearFilters() {
+      modeSelect.value = "best";
+      priceRangeSelect.value = "all";
+      labFilterSelect.value = "all";
+      renderFilteredResults();
+    }
+
+    function initFromURL() {
+      const params = getParams();
+      cityInput.value = params.city;
+      testInput.value = params.q;
+      modeSelect.value = params.mode;
+      priceRangeSelect.value = params.priceRange;
+    }
+
+    searchBtn.addEventListener("click", fetchResults);
+    cityInput.addEventListener("change", fetchResults);
+
+    modeSelect.addEventListener("change", renderFilteredResults);
+    priceRangeSelect.addEventListener("change", renderFilteredResults);
+    labFilterSelect.addEventListener("change", renderFilteredResults);
+    clearFiltersBtn.addEventListener("click", clearFilters);
+
+    testInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        fetchResults();
+      }
+    });
+
+    initFromURL();
+    fetchResults();
+  </script>
+</body>
+</html>
