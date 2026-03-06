@@ -15,6 +15,12 @@
       --card:#ffffff;
       --chip:#eef4ff;
       --shadow:0 8px 24px rgba(25, 42, 70, 0.06);
+      --knowledge-border:#fecaca;
+      --knowledge-bg:#fff7f7;
+      --knowledge-icon-bg:#fee2e2;
+      --knowledge-text:#7f1d1d;
+      --knowledge-link:#b91c1c;
+      --knowledge-link-hover:#991b1b;
     }
 
     *{box-sizing:border-box}
@@ -277,14 +283,13 @@
       font-weight:700;
     }
 
-.price-area{
-  min-width:180px;
-  text-align:right;
-  flex-shrink:0;
-  margin-right:84px;
-  margin-top:60px;
-
-}
+    .price-area{
+      min-width:180px;
+      text-align:right;
+      flex-shrink:0;
+      margin-right:84px;
+      margin-top:60px;
+    }
 
     .price{
       font-size:44px;
@@ -298,6 +303,51 @@
     .price-note{
       font-size:16px;
       color:var(--muted);
+    }
+
+    .knowledge-strip{
+      margin-top:18px;
+      padding:12px 14px;
+      border:1.5px solid var(--knowledge-border);
+      background:var(--knowledge-bg);
+      border-radius:12px;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      max-width:720px;
+    }
+
+    .knowledge-icon{
+      flex-shrink:0;
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      background:var(--knowledge-icon-bg);
+      color:#dc2626;
+      display:grid;
+      place-items:center;
+      font-size:13px;
+      font-weight:800;
+      line-height:1;
+      margin-top:1px;
+    }
+
+    .knowledge-text{
+      font-size:14px;
+      line-height:1.55;
+      color:var(--knowledge-text);
+    }
+
+    .knowledge-text a{
+      color:var(--knowledge-link);
+      font-weight:700;
+      text-decoration:underline;
+      text-underline-offset:2px;
+      margin-left:4px;
+    }
+
+    .knowledge-text a:hover{
+      color:var(--knowledge-link-hover);
     }
 
     .actions{
@@ -386,10 +436,16 @@
       .price-area{
         text-align:left;
         min-width:0;
+        margin-right:0;
+        margin-top:8px;
       }
 
       .price{
         font-size:38px;
+      }
+
+      .knowledge-strip{
+        max-width:100%;
       }
     }
   </style>
@@ -463,7 +519,7 @@
           <div id="statsText">Loading results...</div>
         </div>
 
-        <div id="loadingBox" class="state-box">Fetching comparison from your local backend...</div>
+        <div id="loadingBox" class="state-box">Fetching comparison from backend...</div>
         <div id="errorBox" class="state-box hidden"></div>
         <div id="emptyBox" class="state-box hidden">No matching test results found for this city yet.</div>
 
@@ -549,6 +605,15 @@
       if (lower.includes("blood count") || lower.includes("complete blood count") || lower.includes("cbc")) {
         return "Complete Blood Count (CBC)";
       }
+      if (lower.includes("vitamin d")) {
+        return "Vitamin D Test";
+      }
+      if (lower.includes("hba1c")) {
+        return "HbA1c Test";
+      }
+      if (lower.includes("thyroid")) {
+        return "Thyroid Profile";
+      }
 
       return text || fallback;
     }
@@ -557,6 +622,48 @@
       if (modeSelect.value === "cheap") return "Cheapest";
       if (modeSelect.value === "high") return "Premium option";
       return "Top value";
+    }
+
+    function getKnowledgeContent(searchTerm, displayName) {
+      const term = String(searchTerm || displayName || "").toLowerCase();
+
+      if (term.includes("cbc") || term.includes("complete blood count")) {
+        return {
+          text: "CBC checks important blood components like red cells, white cells, and platelets. It is commonly used to detect infection, anemia, and overall health issues.",
+          link: "./blog/cbc-test-guide.html",
+          linkText: "Read full CBC guide"
+        };
+      }
+
+      if (term.includes("vitamin d")) {
+        return {
+          text: "Vitamin D test helps identify deficiency that may affect bones, immunity, muscle strength, and energy levels.",
+          link: "./blog/vitamin-d-test-guide.html",
+          linkText: "Read Vitamin D guide"
+        };
+      }
+
+      if (term.includes("hba1c")) {
+        return {
+          text: "HbA1c shows average blood sugar over the past 2 to 3 months and is widely used for diabetes screening and monitoring.",
+          link: "./blog/hba1c-test-guide.html",
+          linkText: "Read HbA1c guide"
+        };
+      }
+
+      if (term.includes("thyroid")) {
+        return {
+          text: "Thyroid tests help evaluate hormone balance and are useful for checking fatigue, weight changes, metabolism, and related symptoms.",
+          link: "./blog/thyroid-test-guide.html",
+          linkText: "Read Thyroid guide"
+        };
+      }
+
+      return {
+        text: "Learn what this test checks, when it is recommended, and how to choose the right lab before booking.",
+        link: "./blog/",
+        linkText: "Read test guide"
+      };
     }
 
     function populateLabFilter(items) {
@@ -630,6 +737,7 @@
 
         const safeUrl = item.source_url || item.lab_website || "#";
         const displayTestName = cleanTestName(item.test_raw, testInput.value.trim());
+        const knowledge = getKnowledgeContent(testInput.value.trim(), displayTestName);
 
         card.innerHTML = `
           ${index === 0 ? `<div class="top-value-ribbon">${escapeHtml(ribbonText)}</div>` : ``}
@@ -646,6 +754,14 @@
             <div class="price-area">
               <div class="price">₹${escapeHtml(item.price ?? "—")}</div>
               <div class="price-note">Current listed price</div>
+            </div>
+          </div>
+
+          <div class="knowledge-strip">
+            <div class="knowledge-icon">i</div>
+            <div class="knowledge-text">
+              ${escapeHtml(knowledge.text)}
+              <a href="${escapeHtml(knowledge.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(knowledge.linkText)}</a>
             </div>
           </div>
 
@@ -712,7 +828,7 @@
         console.error(error);
         loadingBox.classList.add("hidden");
         errorBox.classList.remove("hidden");
-        errorBox.textContent = "Could not connect to local backend. Make sure FastAPI is running on http://127.0.0.1:8000";
+        errorBox.textContent = "Could not connect to backend. Check if backend server is running.";
         statsText.textContent = "Results unavailable right now.";
       }
     }
