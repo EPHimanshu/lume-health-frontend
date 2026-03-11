@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Pregnancy Due Date & Week Calculator | Lume Health</title>
+  <meta
+    name="description"
+    content="Use Lume Health's pregnancy due date and week calculator to estimate your due date, current pregnancy week, trimester, and important milestone dates in a simple and easy way."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/assets/css/layout.css" />
+  <link rel="stylesheet" href="./assets/css/pregnancy-calculator.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main>
+    <section class="hero" id="pregnancy-hero">
+      <div class="container hero-inner">
+        <div class="hero-copy-wrap">
+          <span class="eyebrow">Pregnancy tool by Lume Health</span>
+
+          <h1>Pregnancy Due Date &amp; Week Calculator</h1>
+
+          <p class="hero-copy">
+            Find your estimated due date, current pregnancy week, trimester, and important milestone dates in a simple and easy way.
+          </p>
+
+          <p class="hero-note">
+            Informational only. For medical advice, diagnosis, or treatment decisions, please consult your doctor.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="calculator-section" id="pregnancy-calculator-card">
+      <div class="container">
+        <div class="calculator-card">
+          <div class="section-heading">
+            <h2>Choose the method that works best for you</h2>
+            <p>
+              Start with the option you know best. Most people use the first day of their last period.
+            </p>
+          </div>
+
+          <div class="tabs" role="tablist" aria-label="Pregnancy calculator method">
+            <button type="button" class="tab-btn active" data-method="lmp" aria-selected="true">
+              By last period
+            </button>
+
+            <button type="button" class="tab-btn" data-method="dueDate" aria-selected="false">
+              By due date
+            </button>
+
+            <button type="button" class="tab-btn" data-method="conception" aria-selected="false">
+              By conception
+            </button>
+
+            <button type="button" class="tab-btn" data-method="ivf" aria-selected="false">
+              By IVF transfer
+            </button>
+
+            <button type="button" class="tab-btn" data-method="ultrasound" aria-selected="false">
+              By ultrasound
+            </button>
+          </div>
+
+          <form id="pregnancy-form" novalidate>
+            <input type="hidden" id="method" name="method" value="lmp" />
+
+            <div class="form-panel active" data-panel="lmp">
+              <p class="panel-intro">
+                This is the most common way to estimate pregnancy dates.
+              </p>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="lmpDate">First day of your last period</label>
+                  <input type="date" id="lmpDate" name="lmpDate" />
+                  <small>Use the first day of your last menstrual period.</small>
+                </div>
+
+                <div class="field">
+                  <label for="cycleLength">Average cycle length</label>
+                  <input
+                    type="number"
+                    id="cycleLength"
+                    name="cycleLength"
+                    min="21"
+                    max="45"
+                    value="28"
+                  />
+                  <small>Optional. 28 days is the default for most people.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-panel" data-panel="dueDate">
+              <p class="panel-intro">
+                Use this option if you already know your expected due date.
+              </p>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="dueDate">Estimated due date</label>
+                  <input type="date" id="dueDate" name="dueDate" />
+                  <small>This helps estimate your current pregnancy week and timeline.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-panel" data-panel="conception">
+              <p class="panel-intro">
+                Use this if you know the approximate conception date.
+              </p>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="conceptionDate">Conception date</label>
+                  <input type="date" id="conceptionDate" name="conceptionDate" />
+                  <small>This can help estimate your due date and pregnancy week.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-panel" data-panel="ivf">
+              <p class="panel-intro">
+                Use this option if your pregnancy is through IVF.
+              </p>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="ivfTransferDate">IVF transfer date</label>
+                  <input type="date" id="ivfTransferDate" name="ivfTransferDate" />
+                </div>
+
+                <div class="field">
+                  <label for="embryoAgeDays">Embryo age at transfer</label>
+                  <select id="embryoAgeDays" name="embryoAgeDays">
+                    <option value="3">3-day embryo</option>
+                    <option value="5" selected>5-day embryo</option>
+                  </select>
+                  <small>Please select the embryo age used at the time of transfer.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-panel" data-panel="ultrasound">
+              <p class="panel-intro">
+                Use this if you want to estimate dates based on an ultrasound and known pregnancy week.
+              </p>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="ultrasoundDate">Ultrasound date</label>
+                  <input type="date" id="ultrasoundDate" name="ultrasoundDate" />
+                </div>
+
+                <div class="field">
+                  <label for="pregnancyWeeks">Pregnancy weeks on that date</label>
+                  <input
+                    type="number"
+                    id="pregnancyWeeks"
+                    name="pregnancyWeeks"
+                    min="0"
+                    max="45"
+                    placeholder="e.g. 12"
+                  />
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="pregnancyDays">Extra days</label>
+                  <input
+                    type="number"
+                    id="pregnancyDays"
+                    name="pregnancyDays"
+                    min="0"
+                    max="6"
+                    placeholder="0 to 6"
+                  />
+                  <small>Example: if the scan said 12 weeks and 4 days, enter 12 and 4.</small>
+                </div>
+              </div>
+            </div>
+
+            <div id="form-error" class="form-error" aria-live="polite"></div>
+
+            <div class="cta-row">
+              <button type="submit" class="primary-btn">
+                See my pregnancy timeline
+              </button>
+              <p class="cta-note">Takes only a few seconds.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="results-section" class="results-section hidden">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Your pregnancy summary</h2>
+          <p>
+            Here is your estimated pregnancy timeline based on the information you entered.
+          </p>
+        </div>
+
+        <div class="results-grid">
+          <article class="result-card">
+            <span class="result-label">Estimated due date</span>
+            <strong id="result-due-date" class="result-value">—</strong>
+          </article>
+
+          <article class="result-card">
+            <span class="result-label">You are currently</span>
+            <strong id="result-current-week" class="result-value">—</strong>
+          </article>
+
+          <article class="result-card">
+            <span class="result-label">Trimester</span>
+            <strong id="result-trimester" class="result-value">—</strong>
+          </article>
+
+          <article class="result-card">
+            <span class="result-label">Estimated conception date</span>
+            <strong id="result-conception-window" class="result-value">—</strong>
+          </article>
+        </div>
+
+        <div class="detail-grid">
+          <article class="detail-card">
+            <h3>Important dates</h3>
+            <ul id="important-dates-list" class="detail-list"></ul>
+          </article>
+
+          <article class="detail-card">
+            <h3>Common pregnancy milestones</h3>
+            <ul id="milestones-list" class="detail-list"></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="related-tests" id="related-tests">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Looking to compare test prices?</h2>
+          <p>
+            Explore common pregnancy-related blood tests near you through Lume Health.
+          </p>
+        </div>
+
+        <div class="test-grid">
+          <a
+            class="test-card"
+            data-related-test-link
+            data-cta-name="CBC Test"
+            data-test-name="CBC"
+            href="/results.html?test=CBC&mode=best"
+          >
+            <h3>CBC Test</h3>
+            <p>Compare common blood count test prices across labs.</p>
+            <span>Compare prices</span>
+          </a>
+
+          <a
+            class="test-card"
+            data-related-test-link
+            data-cta-name="Thyroid Profile"
+            data-test-name="Thyroid"
+            href="/results.html?test=Thyroid&mode=best"
+          >
+            <h3>Thyroid Profile</h3>
+            <p>See thyroid test prices from different diagnostic labs.</p>
+            <span>Compare prices</span>
+          </a>
+
+          <a
+            class="test-card"
+            data-related-test-link
+            data-cta-name="Blood Sugar"
+            data-test-name="Blood Sugar"
+            href="/results.html?test=Blood%20Sugar&mode=best"
+          >
+            <h3>Blood Sugar</h3>
+            <p>Check common sugar test pricing in your city.</p>
+            <span>Compare prices</span>
+          </a>
+
+          <a
+            class="test-card"
+            data-related-test-link
+            data-cta-name="Vitamin D"
+            data-test-name="Vitamin D"
+            href="/results.html?test=Vitamin%20D&mode=best"
+          >
+            <h3>Vitamin D</h3>
+            <p>Compare Vitamin D test prices and lab options.</p>
+            <span>Compare prices</span>
+          </a>
+
+          <a
+            class="test-card"
+            data-related-test-link
+            data-cta-name="Iron Studies"
+            data-test-name="Iron"
+            href="/results.html?test=Iron&mode=best"
+          >
+            <h3>Iron Studies</h3>
+            <p>Explore iron-related blood test comparison options.</p>
+            <span>Compare prices</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="disclaimer-section">
+      <div class="container">
+        <div class="disclaimer-card">
+          <h2>A small note</h2>
+          <p>
+            This calculator gives an estimated due date and pregnancy timeline based on the information you enter.
+          </p>
+          <p>
+            Pregnancy dates can vary, especially if your cycle is irregular or your doctor uses ultrasound-based dating.
+          </p>
+          <p>
+            For medical advice or decisions, please consult your doctor.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Frequently asked questions</h2>
+        </div>
+
+        <div class="faq-list">
+          <details>
+            <summary>How is pregnancy due date calculated?</summary>
+            <p>
+              A due date is usually estimated from the first day of your last period, conception date, IVF transfer date, ultrasound details, or an already known due date.
+            </p>
+          </details>
+
+          <details>
+            <summary>What if my periods are irregular?</summary>
+            <p>
+              If your cycle is not the standard 28 days, adding your average cycle length may help. Your doctor may also use ultrasound dating for a more accurate estimate.
+            </p>
+          </details>
+
+          <details>
+            <summary>Is the due date always exact?</summary>
+            <p>
+              No. A due date is an estimate. Many babies are born before or after the estimated date.
+            </p>
+          </details>
+
+          <details>
+            <summary>Can I calculate using IVF transfer date?</summary>
+            <p>
+              Yes. This page includes a separate IVF option with embryo age at transfer.
+            </p>
+          </details>
+
+          <details>
+            <summary>Can I use ultrasound details?</summary>
+            <p>
+              Yes. If you know the ultrasound date and the pregnancy week and days shown on that date, you can use the ultrasound option.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/assets/js/layout.js"></script>
+  <script src="./assets/js/pregnancy-utils.js"></script>
+  <script src="./assets/js/pregnancy-calculator.js"></script>
+  <script src="./assets/js/pregnancy-ui.js"></script>
+</body>
+</html>

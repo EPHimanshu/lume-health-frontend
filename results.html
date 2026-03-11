@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lume Health - Compare Test Prices</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Shared universal layout styles -->
+  <link rel="stylesheet" href="/assets/css/layout.css" />
+
   <style>
     :root{
       --navy:#243f6b;
@@ -22,7 +33,7 @@
     html,body{
       margin:0;
       padding:0;
-      font-family:Inter, Arial, Helvetica, sans-serif;
+      font-family:"DM Sans", Arial, Helvetica, sans-serif;
       background:var(--bg);
       color:var(--text);
     }
@@ -32,43 +43,46 @@
       color:inherit;
     }
 
-    .topbar{
-      background:#fff;
-      border-bottom:1px solid var(--line);
-      position:sticky;
-      top:0;
-      z-index:50;
-    }
-
-    .topbar-inner{
+    .page{
       max-width:1440px;
       margin:0 auto;
-      padding:16px 32px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      flex-wrap:wrap;
+      padding:26px 32px 40px;
     }
 
-    .brand{
-      font-size:18px;
-      font-weight:800;
-      letter-spacing:-0.3px;
+    .hero{
+      margin-bottom:22px;
+    }
+
+    .hero h1{
+      margin:0 0 8px;
+      font-family:"Sora", Arial, Helvetica, sans-serif;
+      font-size:40px;
+      line-height:1.1;
+      letter-spacing:-1px;
       color:var(--navy);
-      white-space:nowrap;
+      font-weight:800;
     }
 
-    .brand span{
-      color:var(--teal);
+    .hero p{
+      margin:0;
+      font-size:18px;
+      color:var(--muted);
     }
 
-    .top-search{
+    .search-panel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      margin:0 0 24px;
+    }
+
+    .search-panel-row{
       display:flex;
       align-items:center;
       gap:12px;
       flex-wrap:wrap;
-      margin-left:auto;
     }
 
     .field,
@@ -102,31 +116,6 @@
       transform:translateY(-1px);
     }
 
-    .page{
-      max-width:1440px;
-      margin:0 auto;
-      padding:26px 32px 40px;
-    }
-
-    .hero{
-      margin-bottom:22px;
-    }
-
-    .hero h1{
-      margin:0 0 8px;
-      font-size:40px;
-      line-height:1.1;
-      letter-spacing:-1px;
-      color:var(--navy);
-      font-weight:800;
-    }
-
-    .hero p{
-      margin:0;
-      font-size:18px;
-      color:var(--muted);
-    }
-
     .content{
       display:grid;
       grid-template-columns:320px 1fr;
@@ -149,6 +138,7 @@
       font-size:20px;
       line-height:1.2;
       color:var(--navy);
+      font-family:"Sora", Arial, Helvetica, sans-serif;
     }
 
     .filter-group{
@@ -252,6 +242,7 @@
       font-weight:800;
       color:var(--navy);
       margin:0 0 6px;
+      font-family:"Sora", Arial, Helvetica, sans-serif;
     }
 
     .test-name{
@@ -292,6 +283,7 @@
       color:var(--teal);
       letter-spacing:-1px;
       margin:0 0 6px;
+      font-family:"Sora", Arial, Helvetica, sans-serif;
     }
 
     .price-note{
@@ -444,13 +436,12 @@
     }
 
     @media (max-width: 768px){
-      .topbar-inner,
       .page{
         padding-left:16px;
         padding-right:16px;
       }
 
-      .top-search{
+      .search-panel-row{
         width:100%;
       }
 
@@ -492,11 +483,16 @@
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a href="./index.html" class="brand">Lume <span>Health</span></a>
+  <div id="site-header"></div>
 
-      <div class="top-search">
+  <main class="page">
+    <section class="hero">
+      <h1 id="pageTitle">Compare test prices</h1>
+      <p id="pageSubtitle">Showing available results for your city.</p>
+    </section>
+
+    <section class="search-panel">
+      <div class="search-panel-row">
         <select id="cityInput" class="field" aria-label="Select city">
           <option value="Delhi">Delhi</option>
           <option value="Jaipur">Jaipur</option>
@@ -512,13 +508,6 @@
 
         <button id="searchBtn" class="search-btn">Search</button>
       </div>
-    </div>
-  </header>
-
-  <main class="page">
-    <section class="hero">
-      <h1 id="pageTitle">Compare test prices</h1>
-      <p id="pageSubtitle">Showing available results for your city.</p>
     </section>
 
     <section class="content">
@@ -568,6 +557,10 @@
       </div>
     </section>
   </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/assets/js/layout.js"></script>
 
   <script>
     const BACKEND_BASE = "https://lume-health-backend.onrender.com";
