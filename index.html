@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/assets/css/layout.css" />
 <style>
 :root{
   --navy:#0B3B60;
@@ -173,6 +174,7 @@ img{max-width:100%;display:block}
   50%{transform:translateY(6px)}
 }
 
+/* Header/footer styles stay here because shared partials will reuse the same markup/classes */
 .topbar{
   position:fixed;
   top:0;
@@ -1041,423 +1043,283 @@ footer{
 </head>
 <body>
 
-<header class="topbar" id="stickyNav">
-  <a href="/" class="logo">
-    <div class="logo-icon">L</div>
-    <span class="logo-text">Lume<span>Health</span></span>
-  </a>
+<div id="site-header"></div>
 
-  <div class="topbar-right">
-    <div class="city-pill">
-      <span class="pin-svg">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
-          <path d="M12 21s7-5.2 7-11A7 7 0 1 0 5 10c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="2.2"/>
-          <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/>
-        </svg>
-      </span>
-      <select id="cityTop" aria-label="Select city">
-        <option value="" disabled selected>Select City</option>
-        <option>Delhi</option>
-        <option>Jaipur</option>
-        <option>Mumbai</option>
-        <option>Bengaluru</option>
-        <option>Lucknow</option>
-        <option>Hyderabad</option>
-        <option>Pune</option>
-        <option>Chennai</option>
-      </select>
-    </div>
+<main>
+  <section class="splash">
+    <div class="splash-body">
+      <div class="splash-badge">India's Genuine Medical Test Price Search Engine</div>
+      <h1 class="splash-headline">Right Test.<br>Right Lab.<br><em>Fair Price.</em></h1>
+      <p class="splash-sub">No confusion. No pressure. Just clarity —<br>for every city, every family.</p>
 
-    <div class="lang-switcher" id="langSwitcher">
-      <button class="lang-btn" id="langBtn" aria-label="Switch language" aria-expanded="false">
-        <span class="lang-globe">🌐</span>
-        <span id="langLabel">EN</span>
-        <svg viewBox="0 0 10 6" width="10" height="6" fill="none">
-          <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </button>
-      <div class="lang-dropdown" id="langDropdown" role="listbox">
-        <div class="lang-option active" data-lang="en" role="option"><span class="lang-flag">🇬🇧</span> English</div>
-        <div class="lang-option" data-lang="hi" role="option"><span class="lang-flag">🇮🇳</span> हिन्दी</div>
-        <div class="lang-option" data-lang="zh" role="option"><span class="lang-flag">🇨🇳</span> 中文</div>
-        <div class="lang-option" data-lang="bn" role="option"><span class="lang-flag">🇧🇩</span> বাংলা</div>
-        <div class="lang-option" data-lang="ta" role="option"><span class="lang-flag">🇮🇳</span> தமிழ்</div>
+      <div class="splash-trust">
+        <span>✅ Verified Labs</span>
+        <span>✅ National Chains</span>
+        <span>✅ 100% Free to Use</span>
       </div>
-    </div>
 
-    <button class="hamburger-nav" id="menuBtn2" aria-label="Open menu">
-      <div class="ham-lines">
-        <span class="ham-line"></span>
-        <span class="ham-line"></span>
-        <span class="ham-line"></span>
-      </div>
-    </button>
-  </div>
-</header>
-
-<div class="drawer-overlay" id="overlay"></div>
-<nav class="drawer" id="drawer" aria-label="Site navigation">
-  <button class="drawer-close" id="closeBtn" aria-label="Close menu">✕</button>
-  <a href="#">🏠 Home</a>
-  <a href="#">🔬 Our Services</a>
-  <a href="#">🏥 Our Partners</a>
-  <a href="#">💬 Testimonials</a>
-  <div class="drawer-divider"></div>
-  <a href="#">📋 Blog</a>
-  <a href="#">❓ FAQ</a>
-  <a href="#">📞 Contact Us</a>
-  <div class="drawer-divider"></div>
-  <a href="#">🤝 Partner with Us</a>
-</nav>
-
-<section class="splash">
-  <div class="splash-body">
-    <div class="splash-badge">India's Genuine Medical Test Price Search Engine</div>
-    <h1 class="splash-headline">Right Test.<br>Right Lab.<br><em>Fair Price.</em></h1>
-    <p class="splash-sub">No confusion. No pressure. Just clarity —<br>for every city, every family.</p>
-
-    <div class="splash-trust">
-      <span>✅ Verified Labs</span>
-      <span>✅ National Chains</span>
-      <span>✅ 100% Free to Use</span>
-    </div>
-
-    <div class="scroll-hint" id="scrollHint">
-      <span class="scroll-text">Scroll to search</span>
-      <div class="scroll-arrow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-          <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="hero" id="searchSection">
-  <div class="hero-inner">
-    <h2 class="search-header">Search and compare test prices</h2>
-
-    <div class="search-bar" role="search">
-      <div class="city-chip">
-        <span class="pin-svg">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-            <path d="M12 21s7-5.2 7-11A7 7 0 1 0 5 10c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="2.2"/>
-            <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/>
+      <div class="scroll-hint" id="scrollHint">
+        <span class="scroll-text">Scroll to search</span>
+        <div class="scroll-arrow">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </span>
-        <select id="cityHero" aria-label="Select city">
-          <option value="Delhi" selected>Delhi</option>
-          <option>Jaipur</option>
-          <option>Mumbai</option>
-          <option>Bengaluru</option>
-          <option>Lucknow</option>
-          <option>Hyderabad</option>
-          <option>Pune</option>
-          <option>Chennai</option>
-        </select>
+        </div>
       </div>
-
-      <div class="divider-dot"></div>
-
-      <div class="search-input-wrap">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" style="color:#9CA3AF;flex-shrink:0">
-          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
-          <path d="m17 17 3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <input type="text" id="searchInput" placeholder="Search test — e.g. CBC, Vitamin D, HbA1c…" autocomplete="off"/>
-      </div>
-
-      <button class="search-btn" aria-label="Search" onclick="doSearch()">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-          <circle cx="11" cy="11" r="7" stroke="white" stroke-width="2.2"/>
-          <path d="m17 17 3 3" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-        </svg>
-      </button>
     </div>
+  </section>
 
-    <div class="quick-rail-wrap">
-      <div class="quick-rail-label">Popular searches</div>
+  <section class="hero" id="searchSection">
+    <div class="hero-inner">
+      <h2 class="search-header">Search and compare test prices</h2>
 
-      <div class="quick-rail" id="quickRail">
-        <button class="quick-card" type="button" onclick="quickSearch('CBC')">
-          <span class="quick-title">CBC</span>
-          <span class="quick-price">from ₹249</span>
-          <span class="quick-sub">Most searched blood test</span>
-        </button>
+      <div class="search-bar" role="search">
+        <div class="city-chip">
+          <span class="pin-svg">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+              <path d="M12 21s7-5.2 7-11A7 7 0 1 0 5 10c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="2.2"/>
+              <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </span>
+          <select id="cityHero" aria-label="Select city">
+            <option value="Delhi" selected>Delhi</option>
+            <option>Jaipur</option>
+            <option>Mumbai</option>
+            <option>Bengaluru</option>
+            <option>Lucknow</option>
+            <option>Hyderabad</option>
+            <option>Pune</option>
+            <option>Chennai</option>
+          </select>
+        </div>
 
-        <button class="quick-card" type="button" onclick="quickSearch('Vitamin D')">
-          <span class="quick-title">Vitamin D</span>
-          <span class="quick-price">from ₹499</span>
-          <span class="quick-sub">Common deficiency screening</span>
-        </button>
+        <div class="divider-dot"></div>
 
-        <button class="quick-card" type="button" onclick="quickSearch('HbA1c')">
-          <span class="quick-title">HbA1c</span>
-          <span class="quick-price">from ₹299</span>
-          <span class="quick-sub">Diabetes monitoring test</span>
-        </button>
+        <div class="search-input-wrap">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" style="color:#9CA3AF;flex-shrink:0">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+            <path d="m17 17 3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search test — e.g. CBC, Vitamin D, HbA1c…" autocomplete="off"/>
+        </div>
 
-        <button class="quick-card" type="button" onclick="quickSearch('Thyroid')">
-          <span class="quick-title">Thyroid</span>
-          <span class="quick-price">from ₹350</span>
-          <span class="quick-sub">Routine hormone profile</span>
-        </button>
-
-        <button class="quick-card" type="button" onclick="quickSearch('Lipid Profile')">
-          <span class="quick-title">Lipid Profile</span>
-          <span class="quick-price">from ₹450</span>
-          <span class="quick-sub">Cholesterol screening</span>
-        </button>
-
-        <button class="quick-card" type="button" onclick="quickSearch('LFT')">
-          <span class="quick-title">LFT</span>
-          <span class="quick-price">from ₹399</span>
-          <span class="quick-sub">Liver function test</span>
-        </button>
-
-        <button class="quick-card" type="button" onclick="quickSearch('KFT')">
-          <span class="quick-title">KFT</span>
-          <span class="quick-price">from ₹420</span>
-          <span class="quick-sub">Kidney function test</span>
-        </button>
-
-        <button class="quick-card" type="button" onclick="quickSearch('Vitamin B12')">
-          <span class="quick-title">Vitamin B12</span>
-          <span class="quick-price">from ₹550</span>
-          <span class="quick-sub">Energy and nerve health</span>
-        </button>
-
-        <button class="quick-card" type="button" onclick="quickSearch('CRP')">
-          <span class="quick-title">CRP</span>
-          <span class="quick-price">from ₹280</span>
-          <span class="quick-sub">Inflammation marker</span>
-        </button>
-
-        <button class="quick-card" type="button" onclick="quickSearch('Uric Acid')">
-          <span class="quick-title">Uric Acid</span>
-          <span class="quick-price">from ₹199</span>
-          <span class="quick-sub">Joint pain screening</span>
+        <button class="search-btn" aria-label="Search" onclick="doSearch()">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="white" stroke-width="2.2"/>
+            <path d="m17 17 3 3" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
         </button>
       </div>
-    </div>
 
-    <div class="dot-divider" id="quickDots" aria-hidden="true">
-      <span class="active"></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+      <div class="quick-rail-wrap">
+        <div class="quick-rail-label">Popular searches</div>
 
-    <div class="cta-wrap">
-      <button class="cta-btn" onclick="doSearch()">Get Best Prices →</button>
-    </div>
-  </div>
-</section>
+        <div class="quick-rail" id="quickRail">
+          <button class="quick-card" type="button" onclick="quickSearch('CBC')">
+            <span class="quick-title">CBC</span>
+            <span class="quick-price">from ₹249</span>
+            <span class="quick-sub">Most searched blood test</span>
+          </button>
 
-<section class="services">
-  <div class="services-inner">
-    <p class="section-label">What We Offer</p>
-    <h2 class="section-title">Our Services</h2>
-    <p class="services-desc">
-      Lume Health helps you find the most trusted diagnostic labs near you — and compare prices before you book.
-      From routine blood panels to advanced imaging, we cover all major diagnostic services so you never overpay
-      or walk into the wrong lab. Transparent, verified pricing. No hidden charges. Just simple, honest comparison.
-    </p>
+          <button class="quick-card" type="button" onclick="quickSearch('Vitamin D')">
+            <span class="quick-title">Vitamin D</span>
+            <span class="quick-price">from ₹499</span>
+            <span class="quick-sub">Common deficiency screening</span>
+          </button>
 
-    <div class="service-chips">
-      <button class="chip active">🩸 Blood Tests</button>
-      <button class="chip teal">🔊 Ultrasounds</button>
-      <button class="chip">🧲 MRI</button>
-      <button class="chip">🖥️ CT Scan</button>
-      <button class="chip teal">💉 Full Body Checkup</button>
-      <button class="chip">🏥 Health Packages</button>
-    </div>
-  </div>
-</section>
+          <button class="quick-card" type="button" onclick="quickSearch('HbA1c')">
+            <span class="quick-title">HbA1c</span>
+            <span class="quick-price">from ₹299</span>
+            <span class="quick-sub">Diabetes monitoring test</span>
+          </button>
 
-<section class="testimonials">
-  <div class="testimonials-header">
-    <div>
-      <p class="section-label">Patient Stories</p>
-      <h2 class="section-title">What Our Patients Say</h2>
-    </div>
-    <div class="rating-badge">
-      <span class="stars">★★★★½</span>
-      <span class="rating-text">Rated 4.5 / 5</span>
-    </div>
-  </div>
+          <button class="quick-card" type="button" onclick="quickSearch('Thyroid')">
+            <span class="quick-title">Thyroid</span>
+            <span class="quick-price">from ₹350</span>
+            <span class="quick-sub">Routine hormone profile</span>
+          </button>
 
-  <div class="slide-track-wrap">
-    <div class="slide-track" id="reviewTrack">
-      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I saved ₹800 on a Thyroid panel just by comparing three labs. This is exactly what I needed in Jaipur."</p><div class="reviewer"><div class="avatar">P</div><div class="reviewer-info"><div class="reviewer-name">Priya Sharma</div><div class="reviewer-city">Jaipur</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Finally a website that shows real prices! No more calling 5 labs. Got HbA1c for my father at half the price."</p><div class="reviewer"><div class="avatar">R</div><div class="reviewer-info"><div class="reviewer-name">Rajesh Kumar</div><div class="reviewer-city">Lucknow</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Super simple to use. My mother is not tech-savvy and she figured it out herself. Compare prices is great."</p><div class="reviewer"><div class="avatar">A</div><div class="reviewer-info"><div class="reviewer-name">Anita Verma</div><div class="reviewer-city">Delhi</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"CBC test was shown from 4 labs. I chose the NABL one with home collection at the lowest price. Brilliant!"</p><div class="reviewer"><div class="avatar">M</div><div class="reviewer-info"><div class="reviewer-name">Mohan Das</div><div class="reviewer-city">Kanpur</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Transparent and trustworthy. Finally someone doing good for normal people. Shared with my entire family."</p><div class="reviewer"><div class="avatar">S</div><div class="reviewer-info"><div class="reviewer-name">Sunita Agrawal</div><div class="reviewer-city">Bhopal</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Compared Vitamin D test across Apollo, Lal, Redcliffe — saved ₹350. Will recommend to all my colleagues."</p><div class="reviewer"><div class="avatar">V</div><div class="reviewer-info"><div class="reviewer-name">Vivek Mishra</div><div class="reviewer-city">Varanasi</div></div></div></div>
+          <button class="quick-card" type="button" onclick="quickSearch('Lipid Profile')">
+            <span class="quick-title">Lipid Profile</span>
+            <span class="quick-price">from ₹450</span>
+            <span class="quick-sub">Cholesterol screening</span>
+          </button>
 
-      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I saved ₹800 on a Thyroid panel just by comparing three labs. This is exactly what I needed in Jaipur."</p><div class="reviewer"><div class="avatar">P</div><div class="reviewer-info"><div class="reviewer-name">Priya Sharma</div><div class="reviewer-city">Jaipur</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Finally a website that shows real prices! No more calling 5 labs. Got HbA1c for my father at half the price."</p><div class="reviewer"><div class="avatar">R</div><div class="reviewer-info"><div class="reviewer-name">Rajesh Kumar</div><div class="reviewer-city">Lucknow</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Super simple to use. My mother is not tech-savvy and she figured it out herself. Compare prices is great."</p><div class="reviewer"><div class="avatar">A</div><div class="reviewer-info"><div class="reviewer-name">Anita Verma</div><div class="reviewer-city">Delhi</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"CBC test was shown from 4 labs. I chose the NABL one with home collection at the lowest price. Brilliant!"</p><div class="reviewer"><div class="avatar">M</div><div class="reviewer-info"><div class="reviewer-name">Mohan Das</div><div class="reviewer-city">Kanpur</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Transparent and trustworthy. Finally someone doing good for normal people. Shared with my entire family."</p><div class="reviewer"><div class="avatar">S</div><div class="reviewer-info"><div class="reviewer-name">Sunita Agrawal</div><div class="reviewer-city">Bhopal</div></div></div></div>
-      <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Compared Vitamin D test across Apollo, Lal, Redcliffe — saved ₹350. Will recommend to all my colleagues."</p><div class="reviewer"><div class="avatar">V</div><div class="reviewer-info"><div class="reviewer-name">Vivek Mishra</div><div class="reviewer-city">Varanasi</div></div></div></div>
-    </div>
-  </div>
-</section>
+          <button class="quick-card" type="button" onclick="quickSearch('LFT')">
+            <span class="quick-title">LFT</span>
+            <span class="quick-price">from ₹399</span>
+            <span class="quick-sub">Liver function test</span>
+          </button>
 
-<section class="partners">
-  <div class="partners-header">
-    <p class="section-label">Lab Network</p>
-    <h2 class="section-title">Our Partners</h2>
-  </div>
+          <button class="quick-card" type="button" onclick="quickSearch('KFT')">
+            <span class="quick-title">KFT</span>
+            <span class="quick-price">from ₹420</span>
+            <span class="quick-sub">Kidney function test</span>
+          </button>
 
-  <div class="partner-track-wrap">
-    <div class="partner-track">
-      <div class="partner-logo">Apollo Diagnostics</div>
-      <div class="partner-logo">Dr. Lal PathLabs</div>
-      <div class="partner-logo">Metropolis Labs</div>
-      <div class="partner-logo">Redcliffe Labs</div>
-      <div class="partner-logo">SRL Diagnostics</div>
-      <div class="partner-logo">Thyrocare</div>
-      <div class="partner-logo">Agilus Diagnostics</div>
-      <div class="partner-logo">Pathkind Labs</div>
+          <button class="quick-card" type="button" onclick="quickSearch('Vitamin B12')">
+            <span class="quick-title">Vitamin B12</span>
+            <span class="quick-price">from ₹550</span>
+            <span class="quick-sub">Energy and nerve health</span>
+          </button>
 
-      <div class="partner-logo">Apollo Diagnostics</div>
-      <div class="partner-logo">Dr. Lal PathLabs</div>
-      <div class="partner-logo">Metropolis Labs</div>
-      <div class="partner-logo">Redcliffe Labs</div>
-      <div class="partner-logo">SRL Diagnostics</div>
-      <div class="partner-logo">Thyrocare</div>
-      <div class="partner-logo">Agilus Diagnostics</div>
-      <div class="partner-logo">Pathkind Labs</div>
-    </div>
-  </div>
-</section>
+          <button class="quick-card" type="button" onclick="quickSearch('CRP')">
+            <span class="quick-title">CRP</span>
+            <span class="quick-price">from ₹280</span>
+            <span class="quick-sub">Inflammation marker</span>
+          </button>
 
-<section class="why-us">
-  <div class="why-us-inner">
-    <p class="section-label">Our Promise</p>
-    <h2 class="section-title" style="color:#fff">Why Lume Health?</h2>
-
-    <div class="why-grid">
-      <div class="why-card">
-        <div class="why-num">01.</div>
-        <div class="why-card-title">Price Transparency</div>
-        <p class="why-card-desc">We show you real, verified prices from multiple labs side by side — no hidden charges, no surprises at the counter.</p>
+          <button class="quick-card" type="button" onclick="quickSearch('Uric Acid')">
+            <span class="quick-title">Uric Acid</span>
+            <span class="quick-price">from ₹199</span>
+            <span class="quick-sub">Joint pain screening</span>
+          </button>
+        </div>
       </div>
 
-      <div class="why-card">
-        <div class="why-num">02.</div>
-        <div class="why-card-title">Trusted Lab Network</div>
-        <p class="why-card-desc">Only NABL-accredited and verified labs. We vet every partner so you don't have to — your health is too important to guess.</p>
+      <div class="dot-divider" id="quickDots" aria-hidden="true">
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
 
-      <div class="why-card">
-        <div class="why-num">03.</div>
-        <div class="why-card-title">Zero Pressure Booking</div>
-        <p class="why-card-desc">Compare freely. Book when you're ready — directly on the lab's website via our deep-links. No middleman, no upsell.</p>
-      </div>
-
-      <div class="why-card">
-        <div class="why-num">04.</div>
-        <div class="why-card-title">Community Verified</div>
-        <p class="why-card-desc">Prices verified by real patients uploading bills. "Verified by Bills" badge so you know the price is accurate today.</p>
+      <div class="cta-wrap">
+        <button class="cta-btn" onclick="doSearch()">Get Best Prices →</button>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="partner-cta">
-  <p class="section-label" style="justify-content:center;display:block;text-align:center">For Labs & Clinics</p>
-  <h2 class="partner-cta-title">LumeHealth supports small to medium enterprises and welcomes all medical practitioners.<br>Want to partner with us?</h2>
-  <p class="partner-cta-sub">List your lab, reach thousands of patients, and grow your bookings.</p>
-  <button class="contact-btn" onclick="window.location.href='mailto:partner@lumehealth.in'">Contact Us Now! →</button>
-</section>
+  <section class="services">
+    <div class="services-inner">
+      <p class="section-label">What We Offer</p>
+      <h2 class="section-title">Our Services</h2>
+      <p class="services-desc">
+        Lume Health helps you find the most trusted diagnostic labs near you — and compare prices before you book.
+        From routine blood panels to advanced imaging, we cover all major diagnostic services so you never overpay
+        or walk into the wrong lab. Transparent, verified pricing. No hidden charges. Just simple, honest comparison.
+      </p>
 
-<footer>
-  <div class="footer-grid">
-    <div>
-      <p class="footer-col-title">Quick Links</p>
-      <ul class="footer-links">
-        <li><a href="#">Our Company</a></li>
-        <li><a href="#">Companies / Labs</a></li>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Refund Policy</a></li>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#">Blog</a></li>
-      </ul>
+      <div class="service-chips">
+        <button class="chip active">🩸 Blood Tests</button>
+        <button class="chip teal">🔊 Ultrasounds</button>
+        <button class="chip">🧲 MRI</button>
+        <button class="chip">🖥️ CT Scan</button>
+        <button class="chip teal">💉 Full Body Checkup</button>
+        <button class="chip">🏥 Health Packages</button>
+      </div>
     </div>
+  </section>
 
-    <div>
-      <p class="footer-col-title">Location &amp; Contact</p>
-      <div class="contact-item">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" style="color:#159A9C"><path d="M12 21s7-5.2 7-11A7 7 0 1 0 5 10c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/></svg>
-        123 Health Lane, New Delhi, 110001
+  <section class="testimonials">
+    <div class="testimonials-header">
+      <div>
+        <p class="section-label">Patient Stories</p>
+        <h2 class="section-title">What Our Patients Say</h2>
       </div>
-      <div class="contact-item">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" style="color:#159A9C"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.09 3h3a2 2 0 0 1 2 1.72 13 13 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L9.09 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 13 13 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z" stroke="currentColor" stroke-width="2"/></svg>
-        +91 98765 43210
-      </div>
-      <div class="contact-item">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" style="color:#25D366"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="1.8"/></svg>
-        WhatsApp: +91 98765 43210
-      </div>
-      <div class="contact-item">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" style="color:#159A9C"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="m2 7 10 7 10-7" stroke="currentColor" stroke-width="2"/></svg>
-        <span>Email protected</span>
+      <div class="rating-badge">
+        <span class="stars">★★★★½</span>
+        <span class="rating-text">Rated 4.5 / 5</span>
       </div>
     </div>
 
-    <div>
-      <p class="footer-col-title">Other Links</p>
-      <ul class="footer-links" style="margin-bottom:24px">
-        <li><a href="#">🤰 Pregnancy Due Calculator</a></li>
-        <li><a href="#">📊 BMI Calculator</a></li>
-        <li><a href="#">💊 Test Preparation Guide</a></li>
-      </ul>
+    <div class="slide-track-wrap">
+      <div class="slide-track" id="reviewTrack">
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I saved ₹800 on a Thyroid panel just by comparing three labs. This is exactly what I needed in Jaipur."</p><div class="reviewer"><div class="avatar">P</div><div class="reviewer-info"><div class="reviewer-name">Priya Sharma</div><div class="reviewer-city">Jaipur</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Finally a website that shows real prices! No more calling 5 labs. Got HbA1c for my father at half the price."</p><div class="reviewer"><div class="avatar">R</div><div class="reviewer-info"><div class="reviewer-name">Rajesh Kumar</div><div class="reviewer-city">Lucknow</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Super simple to use. My mother is not tech-savvy and she figured it out herself. Compare prices is great."</p><div class="reviewer"><div class="avatar">A</div><div class="reviewer-info"><div class="reviewer-name">Anita Verma</div><div class="reviewer-city">Delhi</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"CBC test was shown from 4 labs. I chose the NABL one with home collection at the lowest price. Brilliant!"</p><div class="reviewer"><div class="avatar">M</div><div class="reviewer-info"><div class="reviewer-name">Mohan Das</div><div class="reviewer-city">Kanpur</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Transparent and trustworthy. Finally someone doing good for normal people. Shared with my entire family."</p><div class="reviewer"><div class="avatar">S</div><div class="reviewer-info"><div class="reviewer-name">Sunita Agrawal</div><div class="reviewer-city">Bhopal</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Compared Vitamin D test across Apollo, Lal, Redcliffe — saved ₹350. Will recommend to all my colleagues."</p><div class="reviewer"><div class="avatar">V</div><div class="reviewer-info"><div class="reviewer-name">Vivek Mishra</div><div class="reviewer-city">Varanasi</div></div></div></div>
 
-      <p class="footer-col-title">Social Media</p>
-      <div class="social-row">
-        <a class="social-btn" href="#" aria-label="Facebook">f</a>
-        <a class="social-btn" href="#" aria-label="Instagram">in</a>
-        <a class="social-btn" href="#" aria-label="LinkedIn">Li</a>
-        <a class="social-btn" href="#" aria-label="Twitter/X">𝕏</a>
-        <a class="social-btn" href="#" aria-label="YouTube">▶</a>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I saved ₹800 on a Thyroid panel just by comparing three labs. This is exactly what I needed in Jaipur."</p><div class="reviewer"><div class="avatar">P</div><div class="reviewer-info"><div class="reviewer-name">Priya Sharma</div><div class="reviewer-city">Jaipur</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Finally a website that shows real prices! No more calling 5 labs. Got HbA1c for my father at half the price."</p><div class="reviewer"><div class="avatar">R</div><div class="reviewer-info"><div class="reviewer-name">Rajesh Kumar</div><div class="reviewer-city">Lucknow</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Super simple to use. My mother is not tech-savvy and she figured it out herself. Compare prices is great."</p><div class="reviewer"><div class="avatar">A</div><div class="reviewer-info"><div class="reviewer-name">Anita Verma</div><div class="reviewer-city">Delhi</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"CBC test was shown from 4 labs. I chose the NABL one with home collection at the lowest price. Brilliant!"</p><div class="reviewer"><div class="avatar">M</div><div class="reviewer-info"><div class="reviewer-name">Mohan Das</div><div class="reviewer-city">Kanpur</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Transparent and trustworthy. Finally someone doing good for normal people. Shared with my entire family."</p><div class="reviewer"><div class="avatar">S</div><div class="reviewer-info"><div class="reviewer-name">Sunita Agrawal</div><div class="reviewer-city">Bhopal</div></div></div></div>
+        <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Compared Vitamin D test across Apollo, Lal, Redcliffe — saved ₹350. Will recommend to all my colleagues."</p><div class="reviewer"><div class="avatar">V</div><div class="reviewer-info"><div class="reviewer-name">Vivek Mishra</div><div class="reviewer-city">Varanasi</div></div></div></div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="footer-bottom">
-    <p>© 2025 Lume Health. All rights reserved.</p>
-    <p style="font-size:.75rem;color:#9CA3AF">Built with ❤️ for every Indian family</p>
-  </div>
-</footer>
+  <section class="partners">
+    <div class="partners-header">
+      <p class="section-label">Lab Network</p>
+      <h2 class="section-title">Our Partners</h2>
+    </div>
+
+    <div class="partner-track-wrap">
+      <div class="partner-track">
+        <div class="partner-logo">Apollo Diagnostics</div>
+        <div class="partner-logo">Dr. Lal PathLabs</div>
+        <div class="partner-logo">Metropolis Labs</div>
+        <div class="partner-logo">Redcliffe Labs</div>
+        <div class="partner-logo">SRL Diagnostics</div>
+        <div class="partner-logo">Thyrocare</div>
+        <div class="partner-logo">Agilus Diagnostics</div>
+        <div class="partner-logo">Pathkind Labs</div>
+
+        <div class="partner-logo">Apollo Diagnostics</div>
+        <div class="partner-logo">Dr. Lal PathLabs</div>
+        <div class="partner-logo">Metropolis Labs</div>
+        <div class="partner-logo">Redcliffe Labs</div>
+        <div class="partner-logo">SRL Diagnostics</div>
+        <div class="partner-logo">Thyrocare</div>
+        <div class="partner-logo">Agilus Diagnostics</div>
+        <div class="partner-logo">Pathkind Labs</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-us">
+    <div class="why-us-inner">
+      <p class="section-label">Our Promise</p>
+      <h2 class="section-title" style="color:#fff">Why Lume Health?</h2>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-num">01.</div>
+          <div class="why-card-title">Price Transparency</div>
+          <p class="why-card-desc">We show you real, verified prices from multiple labs side by side — no hidden charges, no surprises at the counter.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-num">02.</div>
+          <div class="why-card-title">Trusted Lab Network</div>
+          <p class="why-card-desc">Only NABL-accredited and verified labs. We vet every partner so you don't have to — your health is too important to guess.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-num">03.</div>
+          <div class="why-card-title">Zero Pressure Booking</div>
+          <p class="why-card-desc">Compare freely. Book when you're ready — directly on the lab's website via our deep-links. No middleman, no upsell.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-num">04.</div>
+          <div class="why-card-title">Community Verified</div>
+          <p class="why-card-desc">Prices verified by real patients uploading bills. "Verified by Bills" badge so you know the price is accurate today.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="partner-cta">
+    <p class="section-label" style="justify-content:center;display:block;text-align:center">For Labs & Clinics</p>
+    <h2 class="partner-cta-title">LumeHealth supports small to medium enterprises and welcomes all medical practitioners.<br>Want to partner with us?</h2>
+    <p class="partner-cta-sub">List your lab, reach thousands of patients, and grow your bookings.</p>
+    <button class="contact-btn" onclick="window.location.href='mailto:partner@lumehealth.in'">Contact Us Now! →</button>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="/assets/js/layout.js"></script>
 
 <script>
-  const overlay = document.getElementById('overlay');
-  const drawer = document.getElementById('drawer');
-  const menuBtn2 = document.getElementById('menuBtn2');
-  const closeBtn = document.getElementById('closeBtn');
-
-  function openDrawer(){
-    overlay.classList.add('open');
-    drawer.classList.add('open');
-  }
-
-  function closeDrawer(){
-    overlay.classList.remove('open');
-    drawer.classList.remove('open');
-  }
-
-  menuBtn2.addEventListener('click', openDrawer);
-  closeBtn.addEventListener('click', closeDrawer);
-  overlay.addEventListener('click', closeDrawer);
-
   document.getElementById('scrollHint').addEventListener('click', () => {
     document.getElementById('searchSection').scrollIntoView({ behavior:'smooth' });
   });
@@ -1482,48 +1344,6 @@ footer{
 
   document.getElementById('searchInput').addEventListener('keydown', (e) => {
     if(e.key === 'Enter') doSearch();
-  });
-
-  const langBtn = document.getElementById('langBtn');
-  const langDropdown = document.getElementById('langDropdown');
-  const langLabel = document.getElementById('langLabel');
-
-  langBtn.addEventListener('click', () => {
-    const open = langDropdown.classList.toggle('open');
-    langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-
-  document.addEventListener('click', (e) => {
-    if(!document.getElementById('langSwitcher').contains(e.target)){
-      langDropdown.classList.remove('open');
-      langBtn.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  document.querySelectorAll('.lang-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
-      opt.classList.add('active');
-      const lang = opt.dataset.lang;
-      langLabel.textContent =
-        lang === 'en' ? 'EN' :
-        lang === 'hi' ? 'हि' :
-        lang === 'zh' ? '中' :
-        lang === 'bn' ? 'বাং' : 'தமி';
-      langDropdown.classList.remove('open');
-      langBtn.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-  const cityTop = document.getElementById('cityTop');
-  const cityHero = document.getElementById('cityHero');
-
-  cityTop.addEventListener('change', () => {
-    if(cityTop.value) cityHero.value = cityTop.value;
-  });
-
-  cityHero.addEventListener('change', () => {
-    cityTop.value = cityHero.value;
   });
 
   const quickRail = document.getElementById('quickRail');
